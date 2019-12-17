@@ -15,18 +15,18 @@ import com.ipartek.formacion.ejemploaccesodatos.entidades.Persona;
 public class PresentacionConsola {
 
 	private static final String SALIR_OPCION_ELEGIDA = "¿Desea salir(0) o quedarse(1)?: ";
-
+	
 	public static void main(String[] args) {
 		//DAO: Data Access Object
 		final String ARCHIVO_BBDD = "C:\\Users\\curso\\Desktop\\bbdd.txt";
+		
 		Crudable<Persona> dao = PersonaMemoria.getInstancia();
+		
 		PersonaMemoria.CargarDatosInicio(ARCHIVO_BBDD);
 		
 		// TODO Eliminar una persona
 		// TODO Importación Excel
-		// TODO Guardar/Cargar
 		
-		//System.out.println(dao.insert(new Persona(3L, "Nuevo", "Nuevez")));
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -95,7 +95,6 @@ public class PresentacionConsola {
 					}
 					//Hacer ID automatica
 					for(Persona persona: dao.getAll()) {
-						//System.out.println(persona);
 						id = persona.getId() + 1;
 					}
 					dao.insert(new Persona(id, nombre, apellido));
