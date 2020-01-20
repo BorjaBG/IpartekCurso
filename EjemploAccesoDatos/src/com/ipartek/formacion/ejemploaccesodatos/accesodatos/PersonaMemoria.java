@@ -20,7 +20,7 @@ public class PersonaMemoria implements Crudable<Persona> {
 	
 	private PersonaMemoria() {
 		/*personas.put(1L, new Persona(1L, "Javier", "Lete"));
-		personas.put(2L, new Persona(2L, "Pepe", "Pérez"));*/
+		personas.put(2L, new Persona(2L, "Pepe", "Pï¿½rez"));*/
 		
 	}
 	
@@ -65,7 +65,7 @@ public class PersonaMemoria implements Crudable<Persona> {
 	@Override
 	public Persona getById(Long id) {
 		//TODO Implementar getById
-		throw new AccesoDatosException("No está implementado");
+		throw new AccesoDatosException("No esta implementado");
 	}
 
 	@Override
@@ -77,21 +77,21 @@ public class PersonaMemoria implements Crudable<Persona> {
 	@Override
 	public Persona update(Persona persona) {
 		//TODO Implementar update
-		throw new AccesoDatosException("No está implementado");
+		throw new AccesoDatosException("No estï¿½ implementado");
 	}
 
 	@Override
 	public Persona delete(Persona persona) {
 		
 		//TODO Implementar delete por persona
-		throw new AccesoDatosException("No está implementado");
+		throw new AccesoDatosException("No esta implementado");
 	}
 
 	@Override
 	public Persona delete(Long id) {
 		return personas.remove(id);
 		//TODO Implementar delete por id
-		//throw new AccesoDatosException("No está implementado");
+		//throw new AccesoDatosException("No estï¿½ implementado");
 	}
 
 }
