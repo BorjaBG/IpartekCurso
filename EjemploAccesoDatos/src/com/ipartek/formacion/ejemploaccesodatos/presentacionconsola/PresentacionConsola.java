@@ -36,7 +36,7 @@ public class PresentacionConsola {
 			e3.printStackTrace();
 		}
 		Crudable<Persona> dao = FabricaCrudable.getInstancia(configuracion.getProperty("crudable"));
-		
+		//System.out.println(configuracion.getProperty("crudable"));
 		//PersonaMemoria.CargarDatosInicio(ARCHIVO_BBDD);
 		
 		// TODO Eliminar una persona
@@ -106,11 +106,16 @@ public class PresentacionConsola {
 					} catch (IOException e) {
 						System.out.println("Error");
 					}
-					//Hacer ID automatica
-					for(Persona persona: dao.getAll()) {
-						id = persona.getId() + 1;
+					
+					if("memoria".equals(configuracion.getProperty("crudable"))) {
+						for(Persona persona: dao.getAll()) {
+							id = persona.getId() + 1;
+						}
+						dao.insert(new Persona(id, nombre, apellido));
+					}else{
+						dao.insert(new Persona(null, nombre, apellido));
 					}
-					dao.insert(new Persona(id, nombre, apellido));
+					//Hacer ID automatica
 					
 					System.out.println(SALIR_OPCION_ELEGIDA);
 					try {
@@ -161,10 +166,11 @@ public class PresentacionConsola {
 					
 					for(Persona persona: dao.getAll()) {
 						if(persona.getId() == id) {
-							System.out.println(persona.getNombre() + persona.getApellidos());
-							dao.delete(id);
+							System.out.println(persona.getNombre() + " " + persona.getApellidos());
 						}
 					}
+					
+					dao.delete(id);
 					
 					System.out.println(SALIR_OPCION_ELEGIDA);
 					try {

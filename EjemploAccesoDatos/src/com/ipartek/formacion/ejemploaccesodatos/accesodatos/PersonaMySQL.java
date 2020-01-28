@@ -15,6 +15,8 @@ import com.ipartek.formacion.ejemploaccesodatos.entidades.Persona;
 public class PersonaMySQL implements Crudable<Persona>{
 	private String sqlSelect = "SELECT * FROM personas";
 	private String sqlInsert = "INSERT INTO personas (nombre, apellidos) VALUES (?,?)";
+	private String sqlDelete = "DELETE FROM personas WHERE id = ?";
+	//DELETE FROM `uf2213`.`personas` WHERE (`id` = '9');
 	
 	private String url;
 	private String usuario;
@@ -100,18 +102,34 @@ public class PersonaMySQL implements Crudable<Persona>{
 	}
 
 	@Override
-	public Persona update(Persona t) {
+	public Persona update(Persona persona) {
 		throw new UnsupportedOperationException("NO ESTÁ IMPLEMENTADO");
 	}
 
 	@Override
-	public Persona delete(Persona t) {
+	public Persona delete(Persona persona) {
 		throw new UnsupportedOperationException("NO ESTÁ IMPLEMENTADO");
 	}
 
 	@Override
 	public Persona delete(Long id) {
-		throw new UnsupportedOperationException("NO ESTÁ IMPLEMENTADO");
+		
+		try(Connection con = getConexion()){
+			try(PreparedStatement ps = con.prepareStatement(sqlDelete)){
+				ps.setLong(1, id);	
+				int numeroRegistrosModificados = ps.executeUpdate();
+				if(numeroRegistrosModificados != 1) {
+					throw new AccesoDatosException("Resultado no esperado en la DELETE: " +
+							numeroRegistrosModificados);
+				}
+			}
+			
+			return null;
+		}catch(SQLException e) {
+			throw new AccesoDatosException("Error al obtener todos los registros", e);
+		}
+		
+		//throw new UnsupportedOperationException("NO ESTÁ IMPLEMENTADO");
 	}
 
 }
