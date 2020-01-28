@@ -64,6 +64,9 @@
 	        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 	      </li> -->
 	    </ul>
+	    <span class="ml-3">
+	    	<button class="btn btn-outline-success my-2 my-sm-0" type="button">Login</button>
+	    </span>
 	  </div>
 	</nav>
 	

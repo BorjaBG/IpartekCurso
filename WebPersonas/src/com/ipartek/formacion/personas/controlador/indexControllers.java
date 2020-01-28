@@ -8,26 +8,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
-import com.ipartek.formacion.personas.repositirio.LibroTreeMap;
+import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
 
 /**
- * Servlet implementation class personasController
+ * Servlet implementation class indexControllers
  */
-@WebServlet("/personas")
-public class personasController extends HttpServlet {
+@WebServlet("/index")
+public class indexControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public personasController() {
+    public indexControllers() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		String id = request.getParameter("id");
 		String op = request.getParameter("op");
-		Dao<Persona> dao = LibroTreeMap.getInstancia();
+		Dao<Persona> dao = PersonaTreeMap.getInstancia();
 		
 		if(op != null) {
 			switch(op) {
@@ -44,11 +44,12 @@ public class personasController extends HttpServlet {
 		}
 		
 		request.setAttribute("personas", dao.obtenerTodos());
-		request.getRequestDispatcher("/WEB-INF/vistas/personas.jsp").forward(request, response);
+		
+		request.getRequestDispatcher("/WEB-INF/vistas/index.jsp").forward(request, response);
 	}
 
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

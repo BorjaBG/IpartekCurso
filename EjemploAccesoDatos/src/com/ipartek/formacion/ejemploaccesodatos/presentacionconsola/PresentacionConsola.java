@@ -2,33 +2,45 @@ package com.ipartek.formacion.ejemploaccesodatos.presentacionconsola;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.util.Properties;
+
 import com.ipartek.formacion.ejemploaccesodatos.accesodatos.Crudable;
+import com.ipartek.formacion.ejemploaccesodatos.accesodatos.FabricaCrudable;
 import com.ipartek.formacion.ejemploaccesodatos.accesodatos.PersonaMemoria;
 import com.ipartek.formacion.ejemploaccesodatos.entidades.Persona;
 
 public class PresentacionConsola {
 
-	private static final String SALIR_OPCION_ELEGIDA = "¿Desea salir(0) o quedarse(1)?: ";
+	private static final String SALIR_OPCION_ELEGIDA = "Â¿Desea salir(0) o quedarse(1)?: ";
 	
 	public static void main(String[] args) {
 		//DAO: Data Access Object
 		final String ARCHIVO_BBDD = "C:\\Users\\curso\\Desktop\\bbdd.txt";
 		
-		Crudable<Persona> dao = PersonaMemoria.getInstancia();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Properties configuracion = new Properties();
+		try {
+			configuracion.load(new FileInputStream("configuracion.properties"));
+		} catch (FileNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		} catch (IOException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		Crudable<Persona> dao = FabricaCrudable.getInstancia(configuracion.getProperty("crudable"));
 		
-		PersonaMemoria.CargarDatosInicio(ARCHIVO_BBDD);
+		//PersonaMemoria.CargarDatosInicio(ARCHIVO_BBDD);
 		
 		// TODO Eliminar una persona
-		// TODO Importación Excel
-		
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		// TODO Importaciï¿½n Excel
 		
 		int opcionMenu = 0;
 		long id = 0;
@@ -63,6 +75,7 @@ public class PresentacionConsola {
 			switch(opcionMenu) {
 			case 1:
 				do {
+					
 					System.out.println("Aqui estan todas las personas disponibles en nuestra BBDD: \n");
 					for(Persona persona: dao.getAll()) {
 						System.out.println(persona);
@@ -175,7 +188,7 @@ public class PresentacionConsola {
 					for(Persona persona: dao.getAll()) {
 						if(persona.getId() == id) {
 							System.out.println(persona);
-							System.out.println("¿Que desea modificar, nombre o apellido?");
+							System.out.println("ï¿½Que desea modificar, nombre o apellido?");
 							try {
 								texto = br.readLine();
 								if(texto.matches("nombre")) {

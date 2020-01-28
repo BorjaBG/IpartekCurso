@@ -20,7 +20,8 @@ public class PersonaMemoria implements Crudable<Persona> {
 	
 	private PersonaMemoria() {
 		/*personas.put(1L, new Persona(1L, "Javier", "Lete"));
-		personas.put(2L, new Persona(2L, "Pepe", "P�rez"));*/
+		personas.put(2L, new Persona(2L, "Pepe", "Perez"));*/
+		PersonaMemoria.CargarDatosInicio("C:\\Users\\curso\\Desktop\\bbdd.txt");
 		
 	}
 	
