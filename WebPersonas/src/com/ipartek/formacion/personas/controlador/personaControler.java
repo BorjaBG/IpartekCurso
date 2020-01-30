@@ -6,10 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
-import com.ipartek.formacion.personas.repositirio.LibroTreeMap;
+import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
 
 /**
  * Servlet implementation class personaControler
@@ -33,7 +32,7 @@ public class personaControler extends HttpServlet {
 		System.out.println("ID: " + id + " Operacion: " + op);
 		
 		if(id != null) {
-			Persona persona = LibroTreeMap.getInstancia().obtenerPorId(Long.parseLong(id));
+			Persona persona = PersonaTreeMap.getInstancia().obtenerPorId(Long.parseLong(id));
 			request.setAttribute("persona", persona);
 		}
 		
@@ -47,7 +46,7 @@ public class personaControler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Dao<Persona> dao = LibroTreeMap.getInstancia();
+		Dao<Persona> dao = PersonaTreeMap.getInstancia();
 		
 		String op = request.getParameter("op");
 		String id = request.getParameter("id");

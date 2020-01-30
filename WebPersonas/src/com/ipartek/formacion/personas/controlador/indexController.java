@@ -14,10 +14,10 @@ import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
  * Servlet implementation class indexControllers
  */
 @WebServlet("/index")
-public class indexControllers extends HttpServlet {
+public class indexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public indexControllers() {
+    public indexController() {
         super();
         
     }
