@@ -76,9 +76,9 @@ public class PersonaMemoria implements Crudable<Persona> {
 	}
 
 	@Override
-	public Persona update(Persona persona) {
+	public Persona update(Persona persona, String Nombre, String Apellidos, String opcion, Long id) {
 		//TODO Implementar update
-		throw new AccesoDatosException("No est� implementado");
+		throw new AccesoDatosException("No esta implementado");
 	}
 
 	@Override

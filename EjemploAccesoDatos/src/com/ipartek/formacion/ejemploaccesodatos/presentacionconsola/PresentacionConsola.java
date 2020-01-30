@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.util.Properties;
-
 import com.ipartek.formacion.ejemploaccesodatos.accesodatos.Crudable;
 import com.ipartek.formacion.ejemploaccesodatos.accesodatos.FabricaCrudable;
 import com.ipartek.formacion.ejemploaccesodatos.accesodatos.PersonaMemoria;
@@ -188,31 +187,54 @@ public class PresentacionConsola {
 						cogerId = br.readLine();
 						id = Long.parseLong(cogerId);
 					} catch (IOException e) {
-						System.out.println("Error");
+						throw new RuntimeException("Error, no se ha encontrado a esa persona");
 					}
 					
 					for(Persona persona: dao.getAll()) {
 						if(persona.getId() == id) {
 							System.out.println(persona);
-							System.out.println("�Que desea modificar, nombre o apellido?");
+							System.out.println("¿Que desea modificar, nombre, apellido o ambos?");
 							try {
 								texto = br.readLine();
-								if(texto.matches("nombre")) {
+								switch(texto) {
+								case "nombre":
 									System.out.println("Introduzca el nuevo nombre: ");
 									nombre = br.readLine();
 									for(Persona persona2: dao.getAll()) {
-										if(persona2.getId() == id) {
+										if("mysql".equals(configuracion.getProperty("crudable"))) {
+											dao.update(persona2, nombre, null, "nombre", id);
+										}else if(persona2.getId() == id) {
 											persona2.setNombre(nombre);
 										}
 									}
-								}else if (texto.matches("apellido")){
+									break;
+								case "apellido":
 									System.out.println("Introduzca el nuevo apellido: ");
 									apellido = br.readLine();
-									for(Persona persona3: dao.getAll()) {
-										if(persona3.getId() == id) {
-											persona3.setApellidos(apellido);
+									for(Persona persona2: dao.getAll()) {
+										if("mysql".equals(configuracion.getProperty("crudable"))) {
+											dao.update(persona2, null, apellido, "apellidos", id);
+										}else if(persona2.getId() == id) {
+											persona2.setApellidos(apellido);
 										}
 									}
+									break;
+								case "ambos":
+									System.out.println("Introduzca el nuevo nombre: ");
+									nombre = br.readLine();
+									System.out.println("Introduzca el nuevo apellido: ");
+									apellido = br.readLine();
+									for(Persona persona2: dao.getAll()) {
+										if("mysql".equals(configuracion.getProperty("crudable"))) {
+											dao.update(persona2, nombre, apellido, "ambos", id);
+										}else if(persona2.getId() == id) {
+											persona2.setNombre(nombre);
+											persona2.setApellidos(apellido);
+										}
+									}
+									break;
+								default:
+									throw new RuntimeException("Error, opcion no encontrada o no disponible");
 								}
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block

@@ -16,7 +16,10 @@ public class PersonaMySQL implements Crudable<Persona>{
 	private String sqlSelect = "SELECT * FROM personas";
 	private String sqlInsert = "INSERT INTO personas (nombre, apellidos) VALUES (?,?)";
 	private String sqlDelete = "DELETE FROM personas WHERE id = ?";
-	//DELETE FROM `uf2213`.`personas` WHERE (`id` = '9');
+	private String sqlUpdateNombre = "UPDATE personas SET nombre = ? WHERE (id = ?)";
+	private String sqlUpdateApellidos = "UPDATE personas SET apellidos = ? WHERE (id = ?)";
+	private String sqlUpdateAmbos = "UPDATE personas SET nombre = ?, apellidos = ? WHERE (id = ?)";
+
 	
 	private String url;
 	private String usuario;
@@ -102,8 +105,55 @@ public class PersonaMySQL implements Crudable<Persona>{
 	}
 
 	@Override
-	public Persona update(Persona persona) {
-		throw new UnsupportedOperationException("NO ESTÁ IMPLEMENTADO");
+	public Persona update(Persona persona, String nombre, String apellidos, String operacion, Long id) {
+		try(Connection con = getConexion()){
+			switch(operacion) {
+			case "nombre":
+				try(PreparedStatement ps = con.prepareStatement(sqlUpdateNombre)){
+					ps.setString(1, nombre);
+					ps.setLong(2, id);
+					
+					int numeroRegistrosModificados = ps.executeUpdate();
+					if(numeroRegistrosModificados != 1) {
+						throw new AccesoDatosException("Resultado no esperado en la UPDATE: " +
+								numeroRegistrosModificados);
+					}
+				}
+				break;
+			case "apellidos":
+				try(PreparedStatement ps = con.prepareStatement(sqlUpdateApellidos)){
+					ps.setString(1, apellidos);
+					ps.setLong(2, id);
+					
+					int numeroRegistrosModificados = ps.executeUpdate();
+					if(numeroRegistrosModificados != 1) {
+						throw new AccesoDatosException("Resultado no esperado en la UPDATE: " +
+								numeroRegistrosModificados);
+					}
+				}
+				break;
+			case "ambos":
+				try(PreparedStatement ps = con.prepareStatement(sqlUpdateAmbos)){
+					ps.setString(1, nombre);
+					ps.setString(2, apellidos);
+					ps.setLong(3, id);
+					
+					int numeroRegistrosModificados = ps.executeUpdate();
+					if(numeroRegistrosModificados != 1) {
+						throw new AccesoDatosException("Resultado no esperado en la UPDATE: " +
+								numeroRegistrosModificados);
+					}
+				}
+				break;
+			default:
+				throw new RuntimeException("No hemos podido identificar esa operacion");
+			}
+			return persona;
+		}catch(SQLException e) {
+			throw new AccesoDatosException("Error al obtener todos los registros", e);
+		}
+		
+		//throw new UnsupportedOperationException("NO ESTÁ IMPLEMENTADO");
 	}
 
 	@Override
