@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
-import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
 
 /**
  * Servlet implementation class personasController
@@ -27,7 +26,9 @@ public class personasController extends HttpServlet {
 
 		String id = request.getParameter("id");
 		String op = request.getParameter("op");
-		Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		//Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		@SuppressWarnings("unchecked")
+		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
 		
 		if(op != null) {
 			switch(op) {
