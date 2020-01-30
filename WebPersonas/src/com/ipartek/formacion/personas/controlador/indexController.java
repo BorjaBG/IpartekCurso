@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
-import com.ipartek.formacion.personas.repositirio.FabricaDao;
-import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
 
 @WebServlet("/index")
 public class indexController extends HttpServlet {
