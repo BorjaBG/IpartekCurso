@@ -39,7 +39,7 @@ public class FabricaDao {
 		
 	}
 	
-	public Dao<Persona> getInstanciaPersona(String tipo){
+	public Dao<Persona> getInstanciaPersona(){
 		switch(tipo) {
 		case "memoria":
 			return PersonaTreeMap.getInstancia();

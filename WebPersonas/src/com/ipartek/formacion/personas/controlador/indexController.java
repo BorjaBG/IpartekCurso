@@ -8,28 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
+import com.ipartek.formacion.personas.repositirio.FabricaDao;
 import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
 
-/**
- * Servlet implementation class indexControllers
- */
 @WebServlet("/index")
 public class indexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public indexController() {
-        super();
-        
-    }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		String id = request.getParameter("id");
 		String op = request.getParameter("op");
-		Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		//Dao<Persona> dao = (Dao<Persona>) FabricaDao.getInstancia();
+		@SuppressWarnings("unchecked")
+		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
+		request.setAttribute("personas", dao.obtenerTodos());
 		
-		if(op != null) {
+		/*if(op != null) {
 			switch(op) {
 			case "modificar":
 				Persona persona = dao.obtenerPorId((Long.parseLong(id)));
@@ -41,7 +37,7 @@ public class indexController extends HttpServlet {
 				dao.eliminar((Long.parseLong(id)));
 				break;
 			}
-		}
+		}*/
 		
 		request.setAttribute("personas", dao.obtenerTodos());
 		
