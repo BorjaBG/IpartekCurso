@@ -9,7 +9,7 @@
     <div class="container-fluid">
 			<div class="row">
 				<c:forEach items="${personas}" var="persona">
-					<div class="col-12 col-sm-4 col-md-4 col-lg-2">
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
 						<div class="card" style="width: 13rem;">
 						  <div class="card-body">
 							<img src="https://images.generated.photos/ww3Ht-Tf6Zh17fJYFQEJeNWcqwUMhVlAVykzQH0Uu90/rs:fit:512:512/Z3M6Ly9nZW5lcmF0/ZWQtcGhvdG9zL3Yy/XzAwMDIzOTYuanBn.jpg" class="card-img" alt="Imagen de perfil de la persona">
