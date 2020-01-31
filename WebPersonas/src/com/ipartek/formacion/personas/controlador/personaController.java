@@ -14,10 +14,10 @@ import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
  * Servlet implementation class personaControler
  */
 @WebServlet("/persona")
-public class personaControler extends HttpServlet {
+public class personaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public personaControler() {
+    public personaController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +29,14 @@ public class personaControler extends HttpServlet {
 		String id = request.getParameter("id");
 		String op = request.getParameter("op");
 		
-		System.out.println("ID: " + id + " Operacion: " + op);
+		//System.out.println("ID: " + id + " Operacion: " + op);
 		
 		if(id != null) {
-			Persona persona = PersonaTreeMap.getInstancia().obtenerPorId(Long.parseLong(id));
-			request.setAttribute("persona", persona);
+			@SuppressWarnings("unchecked")
+			Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
+			/*System.out.println(dao.obtenerPorId(Long.parseLong(id)));
+			Persona persona = PersonaTreeMap.getInstancia().obtenerPorId(Long.parseLong(id));*/
+			request.setAttribute("persona", dao.obtenerPorId(Long.parseLong(id)));
 		}
 		
 		request.setAttribute("op", op);
@@ -46,7 +49,9 @@ public class personaControler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		//Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		@SuppressWarnings("unchecked")
+		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
 		
 		String op = request.getParameter("op");
 		String id = request.getParameter("id");
@@ -54,8 +59,6 @@ public class personaControler extends HttpServlet {
 		String apellidos = request.getParameter("apellidos");
 		
 		Persona persona = null;
-		
-		System.out.println("ID: " + id + " Operacion: " + op);
 		
 		switch(op) {
 		case "agregar":
@@ -72,7 +75,7 @@ public class personaControler extends HttpServlet {
 			throw new RuntimeException("Operación no reconocida");
 		}
 		
-		
+		request.setAttribute("personas", dao.obtenerTodos());
 		request.getRequestDispatcher("/WEB-INF/vistas/personas.jsp").forward(request, response);
 		//doGet(request, response);
 	}

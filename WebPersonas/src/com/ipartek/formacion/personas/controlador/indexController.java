@@ -16,13 +16,12 @@ public class indexController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String id = request.getParameter("id");
-		String op = request.getParameter("op");
+		/*String id = request.getParameter("id");
+		String op = request.getParameter("op");*/
 		//Dao<Persona> dao = (Dao<Persona>) FabricaDao.getInstancia();
 		@SuppressWarnings("unchecked")
 		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
 		request.setAttribute("personas", dao.obtenerTodos());
-		
 		/*if(op != null) {
 			switch(op) {
 			case "modificar":
@@ -36,9 +35,7 @@ public class indexController extends HttpServlet {
 				break;
 			}
 		}*/
-		
 		request.setAttribute("personas", dao.obtenerTodos());
-		
 		request.getRequestDispatcher("/WEB-INF/vistas/index.jsp").forward(request, response);
 	}
 

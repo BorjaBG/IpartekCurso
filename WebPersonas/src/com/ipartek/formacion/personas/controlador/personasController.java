@@ -40,6 +40,7 @@ public class personasController extends HttpServlet {
 				return;
 			case "eliminar":
 				dao.eliminar((Long.parseLong(id)));
+				request.setAttribute("op", null);
 				break;
 			}
 		}

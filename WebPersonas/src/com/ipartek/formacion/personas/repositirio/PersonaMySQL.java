@@ -15,7 +15,7 @@ import com.ipartek.formacion.personas.modelos.Persona;
 public class PersonaMySQL implements Dao<Persona> {
 	
 	private String sqlSelect = "SELECT * FROM personas";
-	private String sqlSelectId = "SELECT * FROM videos WHERE id=?";
+	private String sqlSelectId = "SELECT * FROM personas WHERE id=?";
 	private String sqlInsert = "INSERT INTO personas (nombre, apellidos) VALUES (?,?)";
 	private String sqlDelete = "DELETE FROM personas WHERE id = ?";
 	private String sqlUpdate = "UPDATE personas SET nombre=?, apellidos=? WHERE id=?";
@@ -101,7 +101,7 @@ public class PersonaMySQL implements Dao<Persona> {
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Persona(rs.getLong("id"), rs.getString("nombre"), rs.getString("url"));
+						return new Persona(rs.getLong("id"), rs.getString("nombre"), rs.getString("apellidos"));
 					} else {
 						return null;
 					}
