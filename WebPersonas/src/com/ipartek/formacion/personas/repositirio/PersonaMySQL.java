@@ -170,7 +170,7 @@ public class PersonaMySQL implements Dao<Persona> {
 				}
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Error al modificar el video", e);
+			throw new RuntimeException("Error al modificar la persona", e);
 		}
 		//
 	}
