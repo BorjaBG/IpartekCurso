@@ -49,6 +49,9 @@ public class personaController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		@SuppressWarnings("unchecked")
 		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
 		

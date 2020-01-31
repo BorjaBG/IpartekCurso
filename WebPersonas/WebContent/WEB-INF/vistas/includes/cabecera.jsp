@@ -76,14 +76,14 @@
 	    <form class="form-inline my-2 my-lg-0">
 	    	<c:choose>
 					<c:when test="${sessionScope.email != null}">
-						<span class="navbar-text ml-3"> Bienvenido ${sessionScope.email} </span>
+						<span class="navbar-text mr-3"> Bienvenido ${sessionScope.email} </span>
 						<ul class="navbar-nav">
-							<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Logout</button>
+							<a class="nav-link" href="logout"><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Logout</button></a>
 						</ul>
 					</c:when>
 					<c:otherwise>
 						<ul class="navbar-nav">
-							 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
+							 <a class="nav-link" href="/WebPersonas/login"><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button></a>
 						</ul>
 					</c:otherwise>
 			</c:choose>
