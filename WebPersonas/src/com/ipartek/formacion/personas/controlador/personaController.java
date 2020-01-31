@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
-import com.ipartek.formacion.personas.repositirio.PersonaTreeMap;
 
 /**
  * Servlet implementation class personaControler
@@ -75,8 +74,8 @@ public class personaController extends HttpServlet {
 			throw new RuntimeException("Operación no reconocida");
 		}
 		
-		request.setAttribute("personas", dao.obtenerTodos());
-		request.getRequestDispatcher("/WEB-INF/vistas/personas.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/personas");
+		
 		//doGet(request, response);
 	}
 

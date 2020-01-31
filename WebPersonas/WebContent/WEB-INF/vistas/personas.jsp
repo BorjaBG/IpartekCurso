@@ -27,7 +27,7 @@
 						<td>${persona.apellidos}</td>
 						<td>
 							<a href="persona?id=${persona.id}&op=modificar"><button title="modificar" id="btn-modificar" type="button" class="btn btn-warning">Modificar</button></a>
-							<a href="personas?id=${persona.id}&op=eliminar"><button title="eliminar" id="btn-eliminar" type="button" class="btn btn-danger">Eliminar</button></a>
+							<a href="eliminarPersonas?id=${persona.id}"><button title="eliminar" id="btn-eliminar" type="button" class="btn btn-danger">Eliminar</button></a>
 						</td>
 					</tr>
 				</c:forEach>

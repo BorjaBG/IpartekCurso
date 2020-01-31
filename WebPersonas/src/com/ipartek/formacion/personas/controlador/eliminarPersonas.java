@@ -9,46 +9,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.ipartek.formacion.personas.modelos.Persona;
 import com.ipartek.formacion.personas.repositirio.Dao;
 
-/**
- * Servlet implementation class personasController
- */
-@WebServlet("/personas")
-public class personasController extends HttpServlet {
+
+@WebServlet("/eliminarPersonas")
+public class eliminarPersonas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public personasController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String id = request.getParameter("id");
-		String op = request.getParameter("op");
-		//Dao<Persona> dao = PersonaTreeMap.getInstancia();
+		
 		@SuppressWarnings("unchecked")
 		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
+		dao.eliminar(Long.parseLong(id));
 		
-		if(op != null) {
-			switch(op) {
-			case "modificar":
-				Persona persona = dao.obtenerPorId((Long.parseLong(id)));
-				request.setAttribute("persona", persona);
-			case "agregar":
-				request.getRequestDispatcher("persona.jsp").forward(request, response);
-				return;
-			default:
-				throw new RuntimeException("Operación no reconocida");
-			}
-		}
-		
-		request.setAttribute("personas", dao.obtenerTodos());
-		request.getRequestDispatcher("/WEB-INF/vistas/personas.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/personas");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
