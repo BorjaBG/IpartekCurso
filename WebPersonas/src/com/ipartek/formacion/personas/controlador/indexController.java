@@ -21,7 +21,7 @@ public class indexController extends HttpServlet {
 		//Dao<Persona> dao = (Dao<Persona>) FabricaDao.getInstancia();
 		@SuppressWarnings("unchecked")
 		Dao<Persona> dao = (Dao<Persona>) getServletContext().getAttribute("dao");
-		request.setAttribute("personas", dao.obtenerTodos());
+		//request.setAttribute("personas", dao.obtenerTodos());
 		/*if(op != null) {
 			switch(op) {
 			case "modificar":
