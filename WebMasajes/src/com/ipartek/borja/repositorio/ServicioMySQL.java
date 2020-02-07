@@ -1,4 +1,4 @@
-package com.ipartek.formacion.personas.repositirio;
+package com.ipartek.borja.repositorio;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,59 +10,56 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import com.ipartek.formacion.personas.modelos.Persona;
+import com.ipartek.borja.modelos.Servicio;
 
-public class PersonaMySQL implements Dao<Persona> {
+public class ServicioMySQL {
 	
-	private String sqlSelect = "SELECT * FROM personas";
-	private String sqlSelectId = "SELECT * FROM personas WHERE id=?";
-	private String sqlInsert = "INSERT INTO personas (nombre, apellidos) VALUES (?,?)";
-	private String sqlDelete = "DELETE FROM personas WHERE id = ?";
-	private String sqlUpdate = "UPDATE personas SET nombre=?, apellidos=? WHERE id=?";
-	/*private String sqlUpdateNombre = "UPDATE personas SET nombre = ? WHERE (id = ?)";
-	private String sqlUpdateApellidos = "UPDATE personas SET apellidos = ? WHERE (id = ?)";
-	private String sqlUpdateAmbos = "UPDATE personas SET nombre = ?, apellidos = ? WHERE (id = ?)";*/
-
+	private String sqlSelect = "SELECT * FROM servicio";
+	private String sqlSelectId = "SELECT * FROM servicio WHERE id=?";
+	private String sqlInsert = "INSERT INTO servicio (nombre, precio) VALUES (?,?)";
+	private String sqlDelete = "DELETE FROM servicio WHERE id=?";
+	private String sqlUpdate = "UPDATE servicio SET nombre=?, precio=? WHERE id=?";
 	
 	private String url;
 	private String usuario;
 	private String contraseña;
 	
+	
 	// SINGLETON
-		private PersonaMySQL(String url, String usuario, String contraseña) {
-			this.url = url;
-			this.usuario = usuario;
-			this.contraseña = contraseña;
-			
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("No se ha encontrado el driver de MySQL");
-			}
-			
+	private ServicioMySQL(String url, String usuario, String contraseña) {
+		this.url = url;
+		this.usuario = usuario;
+		this.contraseña = contraseña;
+				
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("No se ha encontrado el driver de MySQL");
 		}
-		
-		private static PersonaMySQL instancia = null;
-		
-		public static PersonaMySQL getInstancia(String pathConfiguracion) {
-			try{
-				if(instancia == null) {
-					Properties configuracion = new Properties();
-					configuracion.load(new FileInputStream(pathConfiguracion));
-					instancia = new PersonaMySQL(configuracion.getProperty("mysql.url"),
-								configuracion.getProperty("mysql.usuario"), configuracion.getProperty("mysql.contraseña"));
-				}
-				return instancia;
-			}catch(FileNotFoundException e) {
-				throw new RuntimeException("No se ha podido encontrar el archivo", e);
-			}catch (IOException e) {
-				throw new RuntimeException("Fallo de lectura/escritura del archivo", e);
-			}
+				
+	}
 			
+		private static ServicioMySQL INSTANCIA = null;
+			
+	public static ServicioMySQL getInstancia(String pathConfiguracion) {
+		try{
+			if(INSTANCIA == null) {
+				Properties configuracion = new Properties();
+				configuracion.load(new FileInputStream(pathConfiguracion));
+				INSTANCIA = new ServicioMySQL(configuracion.getProperty("mysql.url"),
+							configuracion.getProperty("mysql.usuario"), configuracion.getProperty("mysql.contraseña"));
+			}
+			return INSTANCIA;
+		}catch(FileNotFoundException e) {
+			throw new RuntimeException("No se ha podido encontrar el archivo", e);
+		}catch (IOException e) {
+			throw new RuntimeException("Fallo de lectura/escritura del archivo", e);
 		}
-		
-		//FIN SINGLETON
-		
+				
+	}
+			
+	//FIN SINGLETON
+	
 	private Connection getConexion(){
 		//System.out.println(url + "\n" + usuario + "\n" + contraseña + "\n");
 		try {
@@ -72,16 +69,15 @@ public class PersonaMySQL implements Dao<Persona> {
 			throw new RuntimeException("Error al conectar con la base de datos", e);
 		}
 	}
-
-	@Override
-	public Iterable<Persona> obtenerTodos() {
+	
+	public Iterable<Servicio> obtenerTodos() {
 		
 		try(Connection con = getConexion()){
 			try (PreparedStatement ps = con.prepareStatement(sqlSelect)) {
 				try (ResultSet rs = ps.executeQuery()) {
-					ArrayList<Persona> personas = new ArrayList<>();
+					ArrayList<Servicio> personas = new ArrayList<>();
 					while (rs.next()) {
-						personas.add(new Persona(rs.getLong("id"), rs.getString("nombre"), rs.getString("apellidos")));
+						personas.add(new Servicio(rs.getInt("id"), rs.getString("nombre"), rs.getDouble("precio")));
 					}
 					return personas;
 				}
@@ -90,11 +86,10 @@ public class PersonaMySQL implements Dao<Persona> {
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
 		}
-		
 	}
-
-	@Override
-	public Persona obtenerPorId(Long id) {
+	
+	
+	public Servicio obtenerPorId(int id) {
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlSelectId)) {
 				ps.setLong(1, id);
@@ -102,7 +97,7 @@ public class PersonaMySQL implements Dao<Persona> {
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Persona(rs.getLong("id"), rs.getString("nombre"), rs.getString("apellidos"));
+						return new Servicio(rs.getInt("id"), rs.getString("nombre"), rs.getDouble("precio"));
 					} else {
 						return null;
 					}
@@ -111,16 +106,14 @@ public class PersonaMySQL implements Dao<Persona> {
 		} catch (SQLException e) {
 			throw new RuntimeException("Error al obtener la persona id: " + id, e);
 		}
-		
-		
 	}
+	
 
-	@Override
-	public void agregar(Persona persona) {
+	public void agregar(Servicio servicio) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
-				ps.setString(1, persona.getNombre());
-				ps.setString(2, persona.getApellidos());
+				ps.setString(1, servicio.getNombre());
+				ps.setDouble(2, servicio.getPrecio());
 				
 				int numeroRegistrosModificados = ps.executeUpdate();
 				
@@ -134,13 +127,12 @@ public class PersonaMySQL implements Dao<Persona> {
 		}
 		
 	}
-
-	@Override
-	public void eliminar(Long id) {
+	
+	public void eliminar(int id) {
 		
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlDelete)){
-				ps.setLong(1, id);	
+				ps.setDouble(1, id);	
 				int numeroRegistrosModificados = ps.executeUpdate();
 				if(numeroRegistrosModificados != 1) {
 					throw new RuntimeException("Resultado no esperado en la DELETE: " +
@@ -153,15 +145,14 @@ public class PersonaMySQL implements Dao<Persona> {
 		}
 		
 	}
-
-	@Override
-	public void actualizar(Persona persona) {
+	
+	public void actualizar(Servicio servicio) {
 		
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
-				ps.setString(1, persona.getNombre());
-				ps.setString(2, persona.getApellidos());
-				ps.setLong(3, persona.getId());
+				ps.setString(1, servicio.getNombre());
+				ps.setDouble(2, servicio.getPrecio());
+				ps.setInt(3, servicio.getId());
 
 				int numeroRegistrosModificados = ps.executeUpdate();
 
@@ -173,7 +164,7 @@ public class PersonaMySQL implements Dao<Persona> {
 		} catch (SQLException e) {
 			throw new RuntimeException("Error al modificar la persona", e);
 		}
-		//
-	}
 
+	}
+	
 }
