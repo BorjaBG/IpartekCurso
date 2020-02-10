@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import com.ipartek.borja.modelos.Servicio;
 
-public class ServicioMySQL {
+public class ServicioMySQL implements Dao<Servicio> {
 	
 	private String sqlSelect = "SELECT * FROM servicio";
 	private String sqlSelectId = "SELECT * FROM servicio WHERE id=?";
@@ -77,7 +77,7 @@ public class ServicioMySQL {
 				try (ResultSet rs = ps.executeQuery()) {
 					ArrayList<Servicio> personas = new ArrayList<>();
 					while (rs.next()) {
-						personas.add(new Servicio(rs.getInt("id"), rs.getString("nombre"), rs.getDouble("precio")));
+						personas.add(new Servicio(rs.getInt("idServicio"), rs.getString("nombre"), rs.getDouble("precio")));
 					}
 					return personas;
 				}
