@@ -10,7 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Personas Prueba</title>
+<title>Masajes</title>
 
 <base href="${pageContext.request.contextPath}/" />
 
@@ -41,11 +41,11 @@
 </head>
 <body>
 	<header>
-		<h1>Personas</h1>
+		<h1>Masajes</h1>
 	</header>
 	
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	  <a class="navbar-brand" href="#">Personas</a>
+	  <a class="navbar-brand" href="#">Masajes</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
