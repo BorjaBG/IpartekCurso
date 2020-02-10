@@ -21,7 +21,7 @@ public class IndexController extends HttpServlet {
 		@SuppressWarnings("unchecked")
 		Dao<Servicio> dao = (Dao<Servicio>) getServletContext().getAttribute("configuracion");
 		
-		request.setAttribute("masajes", Global.dao.obtenerTodos());
+		request.setAttribute("masajes", Global.daoServicio.obtenerTodos());
 		request.getRequestDispatcher("/WEB-INF/vistas/Index.jsp").forward(request, response);
 	}
 

@@ -10,14 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import com.ipartek.borja.modelos.Trabajador;
+import com.ipartek.borja.modelos.Actuaciones;
 
-public class TrabajadorMySQL implements Dao<Trabajador>{
-	private String sqlSelect = "SELECT * FROM trabajador";
-	private String sqlSelectId = "SELECT * FROM trabajador WHERE idTrabajador=?";
-	private String sqlInsert = "INSERT INTO trabajador (nombre, apellidos, dni) VALUES (?,?,?)";
-	private String sqlDelete = "DELETE FROM trabajador WHERE idTrabajador=?";
-	private String sqlUpdate = "UPDATE trabajador SET nombre=?, apellidos=?, dni=? WHERE idTrabajador=?";
+public class ActuacionesMySQL implements Dao<Actuaciones>{
+	private String sqlSelect = "SELECT * FROM actuaciones";
+	private String sqlSelectId = "SELECT * FROM actuaciones WHERE idServicio=? AND idCliente=? AND idValoracion=?";
+	private String sqlInsert = "INSERT INTO actuaciones (idServicio, idTrabajador, idValoracion, fecha) VALUES (?,?,?,?)";
+	private String sqlDelete = "DELETE FROM actuaciones WHERE idServicio=? AND idCliente=? AND idValoracion=?";
+	private String sqlUpdate = "UPDATE actuaciones SET fecha=? WHERE idServicio=? AND idCliente=? AND idValoracion=?";
 	
 	private String url;
 	private String usuario;
@@ -25,7 +25,7 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	
 	
 	// SINGLETON
-	private TrabajadorMySQL(String url, String usuario, String contraseña) {
+	private ActuacionesMySQL(String url, String usuario, String contraseña) {
 		this.url = url;
 		this.usuario = usuario;
 		this.contraseña = contraseña;
@@ -38,14 +38,14 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 				
 	}
 			
-		private static TrabajadorMySQL INSTANCIA = null;
+		private static ActuacionesMySQL INSTANCIA = null;
 			
-	public static TrabajadorMySQL getInstancia(String pathConfiguracion) {
+	public static ActuacionesMySQL getInstancia(String pathConfiguracion) {
 		try{
 			if(INSTANCIA == null) {
 				Properties configuracion = new Properties();
 				configuracion.load(new FileInputStream(pathConfiguracion));
-				INSTANCIA = new TrabajadorMySQL(configuracion.getProperty("mysql.url"),
+				INSTANCIA = new ActuacionesMySQL(configuracion.getProperty("mysql.url"),
 							configuracion.getProperty("mysql.usuario"), configuracion.getProperty("mysql.contraseña"));
 			}
 			return INSTANCIA;
@@ -69,16 +69,16 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		}
 	}
 	
-	public Iterable<Trabajador> obtenerTodos() {
+	public Iterable<Actuaciones> obtenerTodos() {
 		
 		try(Connection con = getConexion()){
 			try (PreparedStatement ps = con.prepareStatement(sqlSelect)) {
 				try (ResultSet rs = ps.executeQuery()) {
-					ArrayList<Trabajador> trabajadores = new ArrayList<>();
+					ArrayList<Actuaciones> actuaciones = new ArrayList<>();
 					while (rs.next()) {
-						trabajadores.add(new Trabajador(rs.getInt("idTrabajador"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni")));
+						actuaciones.add(new Actuaciones(rs.getInt("idServicio"), rs.getInt("idTrabajador"), rs.getInt("idValoracion"), rs.getDate("fecha")));
 					}
-					return trabajadores;
+					return actuaciones;
 				}
 			}
 			
@@ -88,14 +88,14 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	}
 	
 	
-	public Trabajador obtenerPorId(int id) {
+	public Actuaciones obtenerPorId(int id) {
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlSelectId)) {
-				ps.setLong(1, id);
+				ps.setInt(1, id);
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Trabajador(rs.getInt("idTrabajador"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"));
+						return new Actuaciones(rs.getInt("idServicio"), rs.getInt("idTrabajador"), rs.getInt("idValoracion"), rs.getDate("fecha"));
 					} else {
 						return null;
 					}
@@ -107,12 +107,13 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	}
 	
 
-	public void agregar(Trabajador trabajador) {
+	public void agregar(Actuaciones actuaciones) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
-				ps.setString(1, trabajador.getNombre());
-				ps.setString(2, trabajador.getApellidos());
-				ps.setString(3, trabajador.getDni());
+				ps.setInt(1, actuaciones.getIdServicio());
+				ps.setInt(2, actuaciones.getIdTrabajador());
+				ps.setInt(3, actuaciones.getIdValoracion());
+				ps.setDate(4, actuaciones.getFecha());
 				
 				int numeroRegistrosModificados = ps.executeUpdate();
 				
@@ -131,7 +132,7 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlDelete)){
-				ps.setInt(1, id);	
+				ps.setInt(1, id);
 				int numeroRegistrosModificados = ps.executeUpdate();
 				if(numeroRegistrosModificados != 1) {
 					throw new RuntimeException("Resultado no esperado en la DELETE: " +
@@ -145,13 +146,14 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		
 	}
 	
-	public void actualizar(Trabajador trabajador) {
+	public void actualizar(Actuaciones actuaciones) {
 		
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
-				ps.setString(1, trabajador.getNombre());
-				ps.setString(2, trabajador.getApellidos());
-				ps.setInt(3, trabajador.getId());
+				ps.setInt(1, actuaciones.getIdServicio());
+				ps.setInt(2, actuaciones.getIdTrabajador());
+				ps.setInt(3, actuaciones.getIdValoracion());
+				ps.setDate(4, actuaciones.getFecha());
 
 				int numeroRegistrosModificados = ps.executeUpdate();
 

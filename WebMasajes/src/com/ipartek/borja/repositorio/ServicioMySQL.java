@@ -75,11 +75,11 @@ public class ServicioMySQL implements Dao<Servicio> {
 		try(Connection con = getConexion()){
 			try (PreparedStatement ps = con.prepareStatement(sqlSelect)) {
 				try (ResultSet rs = ps.executeQuery()) {
-					ArrayList<Servicio> personas = new ArrayList<>();
+					ArrayList<Servicio> servicios = new ArrayList<>();
 					while (rs.next()) {
-						personas.add(new Servicio(rs.getInt("idServicio"), rs.getString("nombre"), rs.getDouble("precio")));
+						servicios.add(new Servicio(rs.getInt("idServicio"), rs.getString("nombre"), rs.getDouble("precio")));
 					}
-					return personas;
+					return servicios;
 				}
 			}
 			

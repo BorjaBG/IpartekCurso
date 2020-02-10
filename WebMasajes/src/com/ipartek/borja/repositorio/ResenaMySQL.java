@@ -10,14 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import com.ipartek.borja.modelos.Trabajador;
+import com.ipartek.borja.modelos.Resena;
 
-public class TrabajadorMySQL implements Dao<Trabajador>{
-	private String sqlSelect = "SELECT * FROM trabajador";
-	private String sqlSelectId = "SELECT * FROM trabajador WHERE idTrabajador=?";
-	private String sqlInsert = "INSERT INTO trabajador (nombre, apellidos, dni) VALUES (?,?,?)";
-	private String sqlDelete = "DELETE FROM trabajador WHERE idTrabajador=?";
-	private String sqlUpdate = "UPDATE trabajador SET nombre=?, apellidos=?, dni=? WHERE idTrabajador=?";
+public class ResenaMySQL implements Dao<Resena>{
+	private String sqlSelect = "SELECT * FROM valoracion";
+	private String sqlSelectId = "SELECT * FROM valoracion WHERE idValoracion=?";
+	private String sqlInsert = "INSERT INTO valoracion (valoracion, reseña) VALUES (?,?)";
+	private String sqlDelete = "DELETE FROM valoracion WHERE idValoracion=?";
+	private String sqlUpdate = "UPDATE valoracion SET valoracion=?, reseña=? WHERE idValoracion=?";
 	
 	private String url;
 	private String usuario;
@@ -25,7 +25,7 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	
 	
 	// SINGLETON
-	private TrabajadorMySQL(String url, String usuario, String contraseña) {
+	private ResenaMySQL(String url, String usuario, String contraseña) {
 		this.url = url;
 		this.usuario = usuario;
 		this.contraseña = contraseña;
@@ -38,14 +38,14 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 				
 	}
 			
-		private static TrabajadorMySQL INSTANCIA = null;
+		private static ResenaMySQL INSTANCIA = null;
 			
-	public static TrabajadorMySQL getInstancia(String pathConfiguracion) {
+	public static ResenaMySQL getInstancia(String pathConfiguracion) {
 		try{
 			if(INSTANCIA == null) {
 				Properties configuracion = new Properties();
 				configuracion.load(new FileInputStream(pathConfiguracion));
-				INSTANCIA = new TrabajadorMySQL(configuracion.getProperty("mysql.url"),
+				INSTANCIA = new ResenaMySQL(configuracion.getProperty("mysql.url"),
 							configuracion.getProperty("mysql.usuario"), configuracion.getProperty("mysql.contraseña"));
 			}
 			return INSTANCIA;
@@ -69,16 +69,16 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		}
 	}
 	
-	public Iterable<Trabajador> obtenerTodos() {
+	public Iterable<Resena> obtenerTodos() {
 		
 		try(Connection con = getConexion()){
 			try (PreparedStatement ps = con.prepareStatement(sqlSelect)) {
 				try (ResultSet rs = ps.executeQuery()) {
-					ArrayList<Trabajador> trabajadores = new ArrayList<>();
+					ArrayList<Resena> resenas = new ArrayList<>();
 					while (rs.next()) {
-						trabajadores.add(new Trabajador(rs.getInt("idTrabajador"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni")));
+						resenas.add(new Resena(rs.getInt("idValoracion"), rs.getString("valoracion"), rs.getString("reseña")));
 					}
-					return trabajadores;
+					return resenas;
 				}
 			}
 			
@@ -88,14 +88,14 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	}
 	
 	
-	public Trabajador obtenerPorId(int id) {
+	public Resena obtenerPorId(int id) {
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlSelectId)) {
 				ps.setLong(1, id);
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Trabajador(rs.getInt("idTrabajador"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"));
+						return new Resena(rs.getInt("idValoracion"), rs.getString("valoracion"), rs.getString("reseña"));
 					} else {
 						return null;
 					}
@@ -107,12 +107,11 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	}
 	
 
-	public void agregar(Trabajador trabajador) {
+	public void agregar(Resena resena) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
-				ps.setString(1, trabajador.getNombre());
-				ps.setString(2, trabajador.getApellidos());
-				ps.setString(3, trabajador.getDni());
+				ps.setString(1, resena.getValoracion());
+				ps.setString(2, resena.getReseña());
 				
 				int numeroRegistrosModificados = ps.executeUpdate();
 				
@@ -145,13 +144,13 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		
 	}
 	
-	public void actualizar(Trabajador trabajador) {
+	public void actualizar(Resena resena) {
 		
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
-				ps.setString(1, trabajador.getNombre());
-				ps.setString(2, trabajador.getApellidos());
-				ps.setInt(3, trabajador.getId());
+				ps.setString(1, resena.getValoracion());
+				ps.setString(2, resena.getReseña());
+				ps.setInt(3, resena.getId());
 
 				int numeroRegistrosModificados = ps.executeUpdate();
 
@@ -165,4 +164,5 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		}
 
 	}
+	
 }

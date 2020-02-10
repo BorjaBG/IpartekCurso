@@ -5,13 +5,13 @@ import java.sql.Date;
 public class Actuaciones {
 	
 	private int idServicio;
-	private int idCliente;
+	private int idTrabajador;
 	private int idValoracion;
 	private Date fecha;
 	
 	public Actuaciones(int idServicio, int idCliente, int idValoracion, Date fecha) {
 		setIdServicio(idServicio);
-		setIdCliente(idCliente);
+		setIdTrabajador(idCliente);
 		setIdValoracion(idValoracion);
 		setFecha(fecha);
 	}
@@ -28,12 +28,12 @@ public class Actuaciones {
 		this.idServicio = idServicio;
 	}
 
-	public int getIdCliente() {
-		return idCliente;
+	public int getIdTrabajador() {
+		return idTrabajador;
 	}
 
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setIdTrabajador(int idCliente) {
+		this.idTrabajador = idCliente;
 	}
 
 	public int getIdValoracion() {
@@ -57,7 +57,7 @@ public class Actuaciones {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
-		result = prime * result + idCliente;
+		result = prime * result + idTrabajador;
 		result = prime * result + idServicio;
 		result = prime * result + idValoracion;
 		return result;
@@ -77,7 +77,7 @@ public class Actuaciones {
 				return false;
 		} else if (!fecha.equals(other.fecha))
 			return false;
-		if (idCliente != other.idCliente)
+		if (idTrabajador != other.idTrabajador)
 			return false;
 		if (idServicio != other.idServicio)
 			return false;
@@ -88,7 +88,7 @@ public class Actuaciones {
 
 	@Override
 	public String toString() {
-		return "Actuaciones [idServicio=" + idServicio + ", idCliente=" + idCliente + ", idValoracion=" + idValoracion
+		return "Actuaciones [idServicio=" + idServicio + ", idCliente=" + idTrabajador + ", idValoracion=" + idValoracion
 				+ ", fecha=" + fecha + "]";
 	}
 	

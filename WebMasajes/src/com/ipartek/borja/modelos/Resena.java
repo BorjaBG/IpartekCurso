@@ -1,22 +1,22 @@
 package com.ipartek.borja.modelos;
 
-public class Reseña {
+public class Resena {
 	
 	private int id;
 	private String valoracion;
 	private String resena;
 	
-	public Reseña(int id, String valoracion, String resena) {
+	public Resena(int id, String valoracion, String resena) {
 		setId(id);
 		setValoracion(valoracion);
 		setResena(resena);
 	}
 	
-	public Reseña(String valoracion, String resena) {
+	public Resena(String valoracion, String resena) {
 		this(0, valoracion, resena);
 	}
 	
-	public Reseña() {
+	public Resena() {
 		
 	}
 
@@ -62,7 +62,7 @@ public class Reseña {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Reseña other = (Reseña) obj;
+		Resena other = (Resena) obj;
 		if (id != other.id)
 			return false;
 		if (resena == null) {
