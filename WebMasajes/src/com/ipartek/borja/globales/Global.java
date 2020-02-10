@@ -1,4 +1,4 @@
-package com.ipartek.borja.controladores;
+package com.ipartek.borja.globales;
 
 import com.ipartek.borja.modelos.Servicio;
 import com.ipartek.borja.repositorio.Dao;
