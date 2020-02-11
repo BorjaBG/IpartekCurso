@@ -15,10 +15,10 @@ import com.ipartek.borja.modelos.Servicio;
 public class ServicioMySQL implements Dao<Servicio> {
 	
 	private String sqlSelect = "SELECT * FROM servicio";
-	private String sqlSelectId = "SELECT * FROM servicio WHERE id=?";
+	private String sqlSelectId = "SELECT * FROM servicio WHERE idServicio=?";
 	private String sqlInsert = "INSERT INTO servicio (nombre, precio) VALUES (?,?)";
-	private String sqlDelete = "DELETE FROM servicio WHERE id=?";
-	private String sqlUpdate = "UPDATE servicio SET nombre=?, precio=? WHERE id=?";
+	private String sqlDelete = "DELETE FROM servicio WHERE idServicio=?";
+	private String sqlUpdate = "UPDATE servicio SET nombre=?, precio=? WHERE idServicio=?";
 	
 	private String url;
 	private String usuario;
@@ -92,12 +92,12 @@ public class ServicioMySQL implements Dao<Servicio> {
 	public Servicio obtenerPorId(int id) {
 		try (Connection con = getConexion()) {
 			try(PreparedStatement ps = con.prepareStatement(sqlSelectId)) {
-				ps.setLong(1, id);
+				ps.setInt(1, id);
 
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Servicio(rs.getInt("id"), rs.getString("nombre"), rs.getDouble("precio"));
+						return new Servicio(rs.getInt("idServicio"), rs.getString("nombre"), rs.getDouble("precio"));
 					} else {
 						return null;
 					}
@@ -132,7 +132,7 @@ public class ServicioMySQL implements Dao<Servicio> {
 		
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlDelete)){
-				ps.setDouble(1, id);	
+				ps.setInt(1, id);
 				int numeroRegistrosModificados = ps.executeUpdate();
 				if(numeroRegistrosModificados != 1) {
 					throw new RuntimeException("Resultado no esperado en la DELETE: " +
