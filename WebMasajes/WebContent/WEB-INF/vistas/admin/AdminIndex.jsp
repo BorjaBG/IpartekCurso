@@ -9,7 +9,7 @@
 			</div>
 			
 			<div class="col py-3 px-lg-5">
-				<button type="button" class="btn btn-light btn-lg btn-block">Trabajadores</button>
+				<a href="/WebMasajes/AdminTrabajador"><button type="button" class="btn btn-light btn-lg btn-block">Trabajadores</button></a>
 			</div>
 			
 		</div>

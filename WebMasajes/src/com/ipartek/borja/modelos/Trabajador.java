@@ -18,6 +18,12 @@ public class Trabajador {
 		setDni(dni);
 	}
 	
+	public Trabajador(String nombre, String apellidos, String dni) {
+		setNombre(nombre);
+		setApellidos(apellidos);
+		setDni(dni);
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -151,7 +151,8 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 			try(PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
 				ps.setString(1, trabajador.getNombre());
 				ps.setString(2, trabajador.getApellidos());
-				ps.setInt(3, trabajador.getId());
+				ps.setString(3, trabajador.getDni());
+				ps.setInt(4, trabajador.getId());
 
 				int numeroRegistrosModificados = ps.executeUpdate();
 
