@@ -7,22 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.borja.globales.Global;
-import com.ipartek.borja.modelos.Servicio;
-import com.ipartek.borja.repositorio.Dao;
 
-/**
- * Servlet implementation class IndexController
- */
-@WebServlet("/Index")
-public class IndexController extends HttpServlet {
+
+@WebServlet("/AdminValoracion")
+public class AdminValoracionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*@SuppressWarnings("unchecked")
-		Dao<Servicio> dao = (Dao<Servicio>) getServletContext().getAttribute("configuracion");*/
-		
-		request.setAttribute("masajes", Global.daoServicio.obtenerTodos());
-		request.getRequestDispatcher("/WEB-INF/vistas/Index.jsp").forward(request, response);
+		//System.out.println(Global.daoTrabajador.obtenerTodos());
+		request.setAttribute("valoraciones", Global.daoResena.obtenerTodos());
+		request.setAttribute("trabajadores", Global.daoTrabajador.obtenerTodos());
+		request.getRequestDispatcher("/WEB-INF/vistas/admin/AdminValoracion.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
