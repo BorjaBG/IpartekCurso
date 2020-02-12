@@ -7,28 +7,23 @@ public class Cliente {
 	private String apellidos;
 	private String dni;
 	private int telefono;
-	private int idServicio;
-	private int idTrabajador;
+	private int idActuacion;
 	
-	public Cliente(int id, String nombre, String apellidos, String dni, int telefono, int idServicio,
-			int idTrabajador) {
+	public Cliente(int id, String nombre, String apellidos, String dni, int telefono, int idActuacion) {
 		setId(id);
 		setNombre(nombre);
 		setApellidos(apellidos);
 		setDni(dni);
 		setTelefono(telefono);
-		setIdServicio(idServicio);
-		setIdTrabajador(idTrabajador);
+		setIdActuacion(idActuacion);
 	}
 	
-	public Cliente(String nombre, String apellidos, String dni, int telefono, int idServicio,
-			int idTrabajador) {
+	public Cliente(String nombre, String apellidos, String dni, int telefono, int idActuacion) {
 		setNombre(nombre);
 		setApellidos(apellidos);
 		setDni(dni);
 		setTelefono(telefono);
-		setIdServicio(idServicio);
-		setIdTrabajador(idTrabajador);
+		setIdActuacion(idActuacion);
 	}
 	
 	public Cliente() {
@@ -75,20 +70,12 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 
-	public int getIdServicio() {
-		return idServicio;
+	public int getIdActuacion() {
+		return idActuacion;
 	}
 
-	public void setIdServicio(int idServicio) {
-		this.idServicio = idServicio;
-	}
-
-	public int getIdTrabajador() {
-		return idTrabajador;
-	}
-
-	public void setIdTrabajador(int idTrabajador) {
-		this.idTrabajador = idTrabajador;
+	public void setIdActuacion(int idActuacion) {
+		this.idActuacion = idActuacion;
 	}
 
 	@Override
@@ -98,8 +85,7 @@ public class Cliente {
 		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
 		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
 		result = prime * result + id;
-		result = prime * result + idServicio;
-		result = prime * result + idTrabajador;
+		result = prime * result + idActuacion;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + telefono;
 		return result;
@@ -126,9 +112,7 @@ public class Cliente {
 			return false;
 		if (id != other.id)
 			return false;
-		if (idServicio != other.idServicio)
-			return false;
-		if (idTrabajador != other.idTrabajador)
+		if (idActuacion != other.idActuacion)
 			return false;
 		if (nombre == null) {
 			if (other.nombre != null)
@@ -143,7 +127,7 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + ", telefono="
-				+ telefono + ", idServicio=" + idServicio + ", idTrabajador=" + idTrabajador + "]";
+				+ telefono + ", idActuacion=" + idActuacion + "]";
 	}
 	
 	

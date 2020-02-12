@@ -26,12 +26,8 @@
 	    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="123456789" pattern="[0-9]{9}" value="${cliente.telefono}"  required>
 	  </div>
 	  <div class="form-group">
-	    <label for="idServicio">ID del Servicio</label>
-	    <input type="number" class="form-control" id="idServicio" name="idServicio"  value="${cliente.idServicio}">
-	  </div>
-	  <div class="form-group">
-	    <label for="idTrabajador">ID del trabajador</label>
-	    <input type="number" class="form-control" id="idTrabajador" name="idTrabajador"  value="${cliente.idTrabajador}">
+	    <label for="idActuacion">ID del Servicio</label>
+	    <input type="number" class="form-control" id="idActuacion" name="idActuacion"  value="${cliente.idActuacion}">
 	  </div>
 	  <button type="submit" class="btn btn-success" >Aceptar</button>
 	</form>

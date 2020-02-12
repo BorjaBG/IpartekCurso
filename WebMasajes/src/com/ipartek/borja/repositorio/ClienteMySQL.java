@@ -15,9 +15,9 @@ import com.ipartek.borja.modelos.Cliente;
 public class ClienteMySQL implements Dao<Cliente>{
 	private String sqlSelect = "SELECT * FROM cliente";
 	private String sqlSelectId = "SELECT * FROM cliente WHERE idCliente=?";
-	private String sqlInsert = "INSERT INTO cliente (nombre, apellidos, dni, telefono, idServicio, idTrabajador) VALUES (?,?,?,?,?,?)";
-	private String sqlDelete = "DELETE FROM cliente WHERE idValoracion=?";
-	private String sqlUpdate = "UPDATE cliente SET nombre=?, apellidos=?, dni=?, telefono=?, idServicio=?, idTrabajador=? WHERE idCliente=?";
+	private String sqlInsert = "INSERT INTO cliente (nombre, apellidos, dni, telefono, idActuacion) VALUES (?,?,?,?,?,?)";
+	private String sqlDelete = "DELETE FROM cliente WHERE idCliente=?";
+	private String sqlUpdate = "UPDATE cliente SET nombre=?, apellidos=?, dni=?, telefono=?, idActuacion=? WHERE idCliente=?";
 	
 	private String url;
 	private String usuario;
@@ -76,7 +76,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try (ResultSet rs = ps.executeQuery()) {
 					ArrayList<Cliente> clientes = new ArrayList<>();
 					while (rs.next()) {
-						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idServicio"), rs.getInt("idTrabajador")));
+						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idActuacion")));
 					}
 					return clientes;
 				}
@@ -95,7 +95,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idServicio"), rs.getInt("idTrabajador"));
+						return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idActuacion"));
 					} else {
 						return null;
 					}
@@ -114,8 +114,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				ps.setString(2, cliente.getApellidos());
 				ps.setString(3, cliente.getDni());
 				ps.setInt(4, cliente.getTelefono());
-				ps.setInt(5, cliente.getIdServicio());
-				ps.setInt(6, cliente.getIdTrabajador());
+				ps.setInt(5, cliente.getIdActuacion());
 				
 				int numeroRegistrosModificados = ps.executeUpdate();
 				
@@ -156,9 +155,8 @@ public class ClienteMySQL implements Dao<Cliente>{
 				ps.setString(2, cliente.getApellidos());
 				ps.setString(3, cliente.getDni());
 				ps.setInt(4, cliente.getTelefono());
-				ps.setInt(5, cliente.getIdServicio());
-				ps.setInt(6, cliente.getIdTrabajador());
-				ps.setInt(7, cliente.getId());
+				ps.setInt(5, cliente.getIdActuacion());
+				ps.setInt(6, cliente.getId());
 
 				int numeroRegistrosModificados = ps.executeUpdate();
 

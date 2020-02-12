@@ -6,10 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.ipartek.borja.globales.Global;
 import com.ipartek.borja.modelos.Cliente;
-import com.ipartek.borja.modelos.Trabajador;
 
 
 @WebServlet("/ClienteForm")
@@ -42,8 +40,7 @@ public class ClienteFormController extends HttpServlet {
 				String apellidos = request.getParameter("apellidos");
 				String dni = request.getParameter("dni");
 				String telefono = request.getParameter("telefono");
-				String idServicio = request.getParameter("idServicio");
-				String idTrabajador = request.getParameter("idTrabajador");
+				String idActuacion = request.getParameter("idActuacion");
 				
 							
 							
@@ -51,7 +48,7 @@ public class ClienteFormController extends HttpServlet {
 							
 				switch(op) {
 				case "agregar":
-					cliente = new Cliente(nombre, apellidos, dni, Integer.parseInt(telefono), Integer.parseInt(idServicio),Integer.parseInt(idTrabajador));
+					cliente = new Cliente(nombre, apellidos, dni, Integer.parseInt(telefono), Integer.parseInt(idActuacion));
 					Global.daoCliente.agregar(cliente);
 					/*if(servicio.isCorrecto()) {
 						dao.agregar(servicio);
@@ -60,7 +57,7 @@ public class ClienteFormController extends HttpServlet {
 					response.sendRedirect(request.getContextPath() + "/AdminCliente");
 					break;
 				case "modificar":
-					cliente = new Cliente(Integer.parseInt(id), nombre, apellidos, dni, Integer.parseInt(telefono), Integer.parseInt(idServicio),Integer.parseInt(idTrabajador));
+					cliente = new Cliente(Integer.parseInt(id), nombre, apellidos, dni, Integer.parseInt(telefono), Integer.parseInt(idActuacion));
 					Global.daoCliente.actualizar(cliente);
 					/*if(servicio.isCorrecto()) {
 						dao.actualizar(servicio);
