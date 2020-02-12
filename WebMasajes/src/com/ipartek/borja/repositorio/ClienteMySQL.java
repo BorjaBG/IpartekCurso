@@ -76,7 +76,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try (ResultSet rs = ps.executeQuery()) {
 					ArrayList<Cliente> clientes = new ArrayList<>();
 					while (rs.next()) {
-						clientes.add(new Cliente(rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idServicio"), rs.getInt("idValoracion")));
+						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idServicio"), rs.getInt("idTrabajador")));
 					}
 					return clientes;
 				}
@@ -95,7 +95,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try(ResultSet rs = ps.executeQuery()){
 
 					if(rs.next()) {
-						return new Cliente(rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idServicio"), rs.getInt("idValoracion"));
+						return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idServicio"), rs.getInt("idTrabajador"));
 					} else {
 						return null;
 					}

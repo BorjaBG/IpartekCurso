@@ -18,11 +18,17 @@ public class Cliente {
 		setDni(dni);
 		setTelefono(telefono);
 		setIdServicio(idServicio);
+		setIdTrabajador(idTrabajador);
 	}
 	
 	public Cliente(String nombre, String apellidos, String dni, int telefono, int idServicio,
 			int idTrabajador) {
-		this(0, nombre, apellidos, dni, telefono, idServicio, idTrabajador);
+		setNombre(nombre);
+		setApellidos(apellidos);
+		setDni(dni);
+		setTelefono(telefono);
+		setIdServicio(idServicio);
+		setIdTrabajador(idTrabajador);
 	}
 	
 	public Cliente() {
