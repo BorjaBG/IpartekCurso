@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebListener;
 import com.ipartek.borja.globales.Global;
 import com.ipartek.borja.repositorio.ActuacionesMySQL;
 import com.ipartek.borja.repositorio.ClienteMySQL;
+import com.ipartek.borja.repositorio.PeticionesMySQL;
 import com.ipartek.borja.repositorio.ResenaMySQL;
 import com.ipartek.borja.repositorio.ServicioMySQL;
 import com.ipartek.borja.repositorio.TrabajadorMySQL;
@@ -27,6 +28,7 @@ public class InicioListener implements ServletContextListener {
     	Global.daoActuaciones = ActuacionesMySQL.getInstancia(pathConfiguracion);
     	Global.daoResena = ResenaMySQL.getInstancia(pathConfiguracion);
     	Global.daoCliente = ClienteMySQL.getInstancia(pathConfiguracion);
+    	Global.daoPeticiones = PeticionesMySQL.getInstancia(pathConfiguracion);
     }
 	
 }

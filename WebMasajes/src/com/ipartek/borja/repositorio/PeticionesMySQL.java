@@ -5,14 +5,23 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
-public class PeticionesMySQL {
+import com.ipartek.borja.modelos.Peticiones;
+import com.ipartek.borja.modelos.Resena;
+import com.ipartek.borja.modelos.Servicio;
+
+public class PeticionesMySQL implements Dao<Peticiones>{
 	
 	private String url;
 	private String usuario;
 	private String contraseña;
+	private static final String SELECT_VALORACION = "SELECT valoracion.idValoracion, valoracion, reseña, nombre FROM valoracion"
+	+ " INNER JOIN actuaciones ON valoracion.idValoracion = actuaciones.idValoracion INNER JOIN servicio ON actuaciones.idServicio = servicio.idServicio";
 	
 	// SINGLETON
 		private PeticionesMySQL(String url, String usuario, String contraseña) {
@@ -57,6 +66,55 @@ public class PeticionesMySQL {
 				// TODO Auto-generated catch block
 				throw new RuntimeException("Error al conectar con la base de datos", e);
 			}
+		}
+		
+		public Iterable<Peticiones> obtenerTodos() {
+			
+			try (Connection con = DriverManager.getConnection(url, usuario, contraseña)) {
+				try(PreparedStatement ps = con.prepareStatement(SELECT_VALORACION)) {
+					//ps.setInt(1, id);
+					try(ResultSet rs = ps.executeQuery()){
+						ArrayList<Peticiones> peticiones = new ArrayList<>();
+						while(rs.next()) {
+							/*idV = ;
+							valoracion = rs.getString("valoracion");
+							resena = rs.getString("reseña");
+							nombre = rs.getString("servicio.nombre");*/
+							peticiones.add(new Peticiones(rs.getInt("idValoracion"),
+									rs.getString("valoracion"),
+									rs.getString("reseña"),
+									new Servicio(rs.getString("servicio.nombre"))));
+						}
+						return peticiones;
+					}
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException("Error al obtener la persona id: ", e);
+			}
+		}
+
+		@Override
+		public Peticiones obtenerPorId(int id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void agregar(Peticiones objeto) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void eliminar(int id) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void actualizar(Peticiones objeto) {
+			// TODO Auto-generated method stub
+			
 		}
 
 }

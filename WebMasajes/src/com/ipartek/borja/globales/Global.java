@@ -2,6 +2,7 @@ package com.ipartek.borja.globales;
 
 import com.ipartek.borja.modelos.Actuaciones;
 import com.ipartek.borja.modelos.Cliente;
+import com.ipartek.borja.modelos.Peticiones;
 import com.ipartek.borja.modelos.Resena;
 import com.ipartek.borja.modelos.Servicio;
 import com.ipartek.borja.modelos.Trabajador;
@@ -13,4 +14,5 @@ public class Global {
 	public static Dao<Resena> daoResena;
 	public static Dao<Cliente> daoCliente;
 	public static Dao<Trabajador> daoTrabajador;
+	public static Dao<Peticiones> daoPeticiones;
 }

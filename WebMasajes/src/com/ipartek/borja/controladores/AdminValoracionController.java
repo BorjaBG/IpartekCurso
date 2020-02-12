@@ -1,22 +1,39 @@
 package com.ipartek.borja.controladores;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ipartek.borja.globales.Global;
+import com.ipartek.borja.modelos.Peticiones;
 
 
 @WebServlet("/AdminValoracion")
 public class AdminValoracionController extends HttpServlet {
+	//"SELECT valoracion.idValoracion, valoracion, reseña, nombre FROM valoracion, actuaciones, servicio WHERE valoracion.idValoracion = actuaciones.idValoracion AND actuaciones.idServicio = servicio.idServicio"
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//System.out.println(Global.daoTrabajador.obtenerTodos());
-		request.setAttribute("valoraciones", Global.daoResena.obtenerTodos());
-		request.setAttribute("trabajadores", Global.daoTrabajador.obtenerTodos());
+		
+		
+		
+		
+		/*try {
+			//System.out.println(Global.daoPeticiones.obtenerTodos().toString());
+		}catch(NullPointerException e) {
+			throw new RuntimeException("A habido un error en daoPeticiones: " + e);
+		}*/
+		
+		//request.setAttribute("valoraciones", Global.daoResena.obtenerTodos());
+		request.setAttribute("valoraciones", Global.daoPeticiones.obtenerTodos());
 		request.getRequestDispatcher("/WEB-INF/vistas/admin/AdminValoracion.jsp").forward(request, response);
 	}
 

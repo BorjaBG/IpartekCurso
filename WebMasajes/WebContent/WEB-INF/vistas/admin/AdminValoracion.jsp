@@ -9,16 +9,17 @@
 					<th>ID</th>
 					<th>Valoracion</th>
 					<th>Reseña</th>
-					
+					<th>Nombre del servicio</th>
 				</tr>
 			</thead>
 			
 			<tbody>
 				<c:forEach items="${valoraciones}" var="valoracion">
 					<tr>
-						<th>${valoracion.id}</th>
+						<th>${valoracion.idValoracion}</th>
 						<td>${valoracion.valoracion}</td>
-						<td>${valoracion.reseña}</td>
+						<td>${valoracion.resena}</td>
+						<td>${valoracion.servicio.nombre}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

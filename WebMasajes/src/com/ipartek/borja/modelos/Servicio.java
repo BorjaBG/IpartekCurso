@@ -16,6 +16,10 @@ public class Servicio {
 		this(0, nombre, precio);
 	}
 	
+	public Servicio(String nombre) {
+		setNombre(nombre);
+	}
+	
 	public Servicio() {
 		
 	}
