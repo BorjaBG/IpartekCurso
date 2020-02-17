@@ -13,6 +13,8 @@ import java.util.Properties;
 import com.ipartek.borja.modelos.Resena;
 
 public class ResenaMySQL implements Dao<Resena>{
+	
+	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM valoracion";
 	private String sqlSelectId = "SELECT * FROM valoracion WHERE idValoracion=?";
 	private String sqlInsert = "INSERT INTO valoracion (valoracion, reseña) VALUES (?,?)";

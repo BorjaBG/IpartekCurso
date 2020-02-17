@@ -14,6 +14,7 @@ import com.ipartek.borja.modelos.Servicio;
 
 public class ServicioMySQL implements Dao<Servicio> {
 	
+	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM servicio";
 	private String sqlSelectId = "SELECT * FROM servicio WHERE idServicio=?";
 	private String sqlInsert = "INSERT INTO servicio (nombre, precio) VALUES (?,?)";

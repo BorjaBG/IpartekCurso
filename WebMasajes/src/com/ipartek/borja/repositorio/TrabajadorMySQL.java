@@ -13,6 +13,8 @@ import java.util.Properties;
 import com.ipartek.borja.modelos.Trabajador;
 
 public class TrabajadorMySQL implements Dao<Trabajador>{
+	
+	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM trabajador";
 	private String sqlSelectId = "SELECT * FROM trabajador WHERE idTrabajador=?";
 	private String sqlInsert = "INSERT INTO trabajador (nombre, apellidos, dni) VALUES (?,?,?)";

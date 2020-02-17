@@ -13,6 +13,8 @@ import java.util.Properties;
 import com.ipartek.borja.modelos.Actuaciones;
 
 public class ActuacionesMySQL implements Dao<Actuaciones>{
+	
+	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM actuaciones";
 	private String sqlSelectId = "SELECT * FROM actuaciones WHERE idServicio=? AND idCliente=? AND idValoracion=?";
 	private String sqlInsert = "INSERT INTO actuaciones (idServicio, idTrabajador, idValoracion, fecha) VALUES (?,?,?,?)";

@@ -13,6 +13,8 @@ import java.util.Properties;
 import com.ipartek.borja.modelos.Cliente;
 
 public class ClienteMySQL implements Dao<Cliente>{
+	
+	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM cliente";
 	private String sqlSelectId = "SELECT * FROM cliente WHERE idCliente=?";
 	private String sqlInsert = "INSERT INTO cliente (nombre, apellidos, dni, telefono, idActuacion) VALUES (?,?,?,?,?,?)";
