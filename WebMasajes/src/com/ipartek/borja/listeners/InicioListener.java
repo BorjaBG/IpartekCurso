@@ -16,18 +16,20 @@ import com.ipartek.borja.repositorio.TrabajadorMySQL;
 public class InicioListener implements ServletContextListener {
 
     
-    public void contextDestroyed(ServletContextEvent sce)  { 
+    private static final String NOMBRE_POOL = "jdbc/salonmasajes";
+
+	public void contextDestroyed(ServletContextEvent sce)  { 
          
     }
 
     public void contextInitialized(ServletContextEvent sce)  { 
     	String pathConfiguracion = sce.getServletContext().getRealPath("/WEB-INF/") + "configuracion.properties";
     	
-    	Global.daoServicio = ServicioMySQL.getInstancia("jdbc/salonmasajes");
-    	Global.daoTrabajador = TrabajadorMySQL.getInstancia(pathConfiguracion);
-    	Global.daoActuaciones = ActuacionesMySQL.getInstancia(pathConfiguracion);
-    	Global.daoResena = ResenaMySQL.getInstancia(pathConfiguracion);
-    	Global.daoCliente = ClienteMySQL.getInstancia(pathConfiguracion);
+    	Global.daoServicio = ServicioMySQL.getInstancia(NOMBRE_POOL);
+    	Global.daoTrabajador = TrabajadorMySQL.getInstancia(NOMBRE_POOL);
+    	Global.daoActuaciones = ActuacionesMySQL.getInstancia(NOMBRE_POOL);
+    	Global.daoResena = ResenaMySQL.getInstancia(NOMBRE_POOL);
+    	Global.daoCliente = ClienteMySQL.getInstancia(NOMBRE_POOL);
     	Global.daoPeticiones = PeticionesMySQL.getInstancia(pathConfiguracion);
     }
 	

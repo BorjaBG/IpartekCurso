@@ -1,25 +1,28 @@
 package com.ipartek.borja.repositorio;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Properties;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.ipartek.borja.modelos.Cliente;
 
 public class ClienteMySQL implements Dao<Cliente>{
 	
 	//Cambiar llamadas
-	private String sqlSelect = "SELECT * FROM cliente";
-	private String sqlSelectId = "SELECT * FROM cliente WHERE idCliente=?";
-	private String sqlInsert = "INSERT INTO cliente (nombre, apellidos, dni, telefono, idActuacion) VALUES (?,?,?,?,?,?)";
-	private String sqlDelete = "DELETE FROM cliente WHERE idCliente=?";
-	private String sqlUpdate = "UPDATE cliente SET nombre=?, apellidos=?, dni=?, telefono=?, idActuacion=? WHERE idCliente=?";
+	private String sqlSelect = "SELECT * FROM clientegetall";
+	private String sqlSelectId = "CALL clienteGetById(?)";
+	private String sqlInsert = "CALL clienteAñadir(?,?,?,?,?,?,?)";
+	private String sqlDelete = "CALL clienteDelete(?)";
+	private String sqlUpdate = "CALL clienteUpdate(?,?,?,?,?,?)";
+	
+	private static DataSource pool;
 	
 	private String url;
 	private String usuario;
@@ -42,7 +45,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 			
 		private static ClienteMySQL INSTANCIA = null;
 			
-	public static ClienteMySQL getInstancia(String pathConfiguracion) {
+	/*public static ClienteMySQL getInstancia(String pathConfiguracion) {
 		try{
 			if(INSTANCIA == null) {
 				Properties configuracion = new Properties();
@@ -57,25 +60,59 @@ public class ClienteMySQL implements Dao<Cliente>{
 			throw new RuntimeException("Fallo de lectura/escritura del archivo", e);
 		}
 				
+	}*/
+		
+	
+	public static ClienteMySQL getInstancia(String entorno) {
+		InitialContext initCtx;
+		try {
+			initCtx = new InitialContext();
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			DataSource dataSource = (DataSource) envCtx.lookup(entorno);
+
+			ClienteMySQL.pool = dataSource;
+
+			if (INSTANCIA == null) {
+				INSTANCIA = new ClienteMySQL(null, null, null);
+			}
+
+			return INSTANCIA;
+		} catch (NamingException e) {
+			throw new RuntimeException("No se ha podido conectar al Pool de conexiones " + entorno);
+		}
 	}
+	
 			
 	//FIN SINGLETON
 	
 	private Connection getConexion(){
 		//System.out.println(url + "\n" + usuario + "\n" + contraseña + "\n");
-		try {
+		/*try {
 			return DriverManager.getConnection(url, usuario, contraseña);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException("Error al conectar con la base de datos", e);
+		}*/
+		
+		try {
+			if (pool == null) {
+				new com.mysql.cj.jdbc.Driver();
+				return DriverManager.getConnection(url, usuario, contraseña);
+			} else {
+				return pool.getConnection();
+			}
+		}catch(SQLException e) {
+			System.err.println("IPARTEK: Error de conexión a la base de datos: " + url + ":" + usuario + ":" + contraseña);
+			throw new RuntimeException("No se ha podido conectar a la base de datos", e);
 		}
+		
 	}
 	
 	public Iterable<Cliente> obtenerTodos() {
 		
 		try(Connection con = getConexion()){
-			try (PreparedStatement ps = con.prepareStatement(sqlSelect)) {
-				try (ResultSet rs = ps.executeQuery()) {
+			try (CallableStatement cs = con.prepareCall(sqlSelect)) {
+				try (ResultSet rs = cs.executeQuery()) {
 					ArrayList<Cliente> clientes = new ArrayList<>();
 					while (rs.next()) {
 						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idActuacion")));
@@ -92,9 +129,9 @@ public class ClienteMySQL implements Dao<Cliente>{
 	
 	public Cliente obtenerPorId(int id) {
 		try (Connection con = getConexion()) {
-			try(PreparedStatement ps = con.prepareStatement(sqlSelectId)) {
-				ps.setInt(1, id);
-				try(ResultSet rs = ps.executeQuery()){
+			try(CallableStatement cs = con.prepareCall(sqlSelectId)) {
+				cs.setInt(1, id);
+				try(ResultSet rs = cs.executeQuery()){
 
 					if(rs.next()) {
 						return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idActuacion"));
@@ -111,33 +148,33 @@ public class ClienteMySQL implements Dao<Cliente>{
 
 	public Integer agregar(Cliente cliente) {
 		try(Connection con = getConexion()){
-			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
-				ps.setString(1, cliente.getNombre());
-				ps.setString(2, cliente.getApellidos());
-				ps.setString(3, cliente.getDni());
-				ps.setInt(4, cliente.getTelefono());
-				ps.setInt(5, cliente.getIdActuacion());
+			try(CallableStatement cs = con.prepareCall(sqlInsert)){
+				cs.setString(1, cliente.getNombre());
+				cs.setString(2, cliente.getApellidos());
+				cs.setString(3, cliente.getDni());
+				cs.setInt(4, cliente.getTelefono());
+				cs.setInt(5, cliente.getIdActuacion());
+				cs.registerOutParameter(6, java.sql.Types.INTEGER);
 				
-				int numeroRegistrosModificados = ps.executeUpdate();
+				int numeroRegistrosModificados = cs.executeUpdate();
 				
 				if(numeroRegistrosModificados != 1) {
 					throw new RuntimeException("Resultado no esperado en la INSERT: " +
 							numeroRegistrosModificados);
 				}
+				return cs.getInt(6);
 			}
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
 		}
-		return null;
-		
 	}
 	
 	public void eliminar(int id) {
 		
 		try(Connection con = getConexion()){
-			try(PreparedStatement ps = con.prepareStatement(sqlDelete)){
-				ps.setInt(1, id);	
-				int numeroRegistrosModificados = ps.executeUpdate();
+			try(CallableStatement cs = con.prepareCall(sqlDelete)){
+				cs.setInt(1, id);	
+				int numeroRegistrosModificados = cs.executeUpdate();
 				if(numeroRegistrosModificados != 1) {
 					throw new RuntimeException("Resultado no esperado en la DELETE: " +
 							numeroRegistrosModificados);
@@ -153,15 +190,15 @@ public class ClienteMySQL implements Dao<Cliente>{
 	public void actualizar(Cliente cliente) {
 		
 		try (Connection con = getConexion()) {
-			try(PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
-				ps.setString(1, cliente.getNombre());
-				ps.setString(2, cliente.getApellidos());
-				ps.setString(3, cliente.getDni());
-				ps.setInt(4, cliente.getTelefono());
-				ps.setInt(5, cliente.getIdActuacion());
-				ps.setInt(6, cliente.getId());
+			try(CallableStatement cs = con.prepareCall(sqlUpdate)) {
+				cs.setString(1, cliente.getNombre());
+				cs.setString(2, cliente.getApellidos());
+				cs.setString(3, cliente.getDni());
+				cs.setInt(4, cliente.getTelefono());
+				cs.setInt(5, cliente.getIdActuacion());
+				cs.setInt(6, cliente.getId());
 
-				int numeroRegistrosModificados = ps.executeUpdate();
+				int numeroRegistrosModificados = cs.executeUpdate();
 
 				if(numeroRegistrosModificados != 1) {
 					throw new RuntimeException("Resultado no esperado en la UPDATE: " +
