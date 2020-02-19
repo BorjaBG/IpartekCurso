@@ -109,7 +109,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 	}
 	
 
-	public void agregar(Cliente cliente) {
+	public Integer agregar(Cliente cliente) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
 				ps.setString(1, cliente.getNombre());
@@ -128,6 +128,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
 		}
+		return null;
 		
 	}
 	

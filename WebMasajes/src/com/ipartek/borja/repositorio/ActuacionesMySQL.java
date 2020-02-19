@@ -109,7 +109,7 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 	}
 	
 
-	public void agregar(Actuaciones actuaciones) {
+	public Integer agregar(Actuaciones actuaciones) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
 				ps.setInt(1, actuaciones.getIdServicio());
@@ -127,6 +127,7 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
 		}
+		return null;
 		
 	}
 	

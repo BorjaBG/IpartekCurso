@@ -100,7 +100,8 @@ public class PeticionesMySQL implements Dao<Peticiones>{
 		}
 
 		@Override
-		public void agregar(Peticiones objeto) {
+		public Integer agregar(Peticiones objeto) {
+			return null;
 			// TODO Auto-generated method stub
 			
 		}

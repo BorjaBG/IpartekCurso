@@ -23,7 +23,7 @@ public class InicioListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce)  { 
     	String pathConfiguracion = sce.getServletContext().getRealPath("/WEB-INF/") + "configuracion.properties";
     	
-    	Global.daoServicio = ServicioMySQL.getInstancia(pathConfiguracion);
+    	Global.daoServicio = ServicioMySQL.getInstancia("jdbc/salonmasajes");
     	Global.daoTrabajador = TrabajadorMySQL.getInstancia(pathConfiguracion);
     	Global.daoActuaciones = ActuacionesMySQL.getInstancia(pathConfiguracion);
     	Global.daoResena = ResenaMySQL.getInstancia(pathConfiguracion);

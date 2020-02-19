@@ -109,7 +109,7 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 	}
 	
 
-	public void agregar(Trabajador trabajador) {
+	public Integer agregar(Trabajador trabajador) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
 				ps.setString(1, trabajador.getNombre());
@@ -126,6 +126,7 @@ public class TrabajadorMySQL implements Dao<Trabajador>{
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
 		}
+		return null;
 		
 	}
 	

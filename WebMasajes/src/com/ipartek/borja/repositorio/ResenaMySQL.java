@@ -109,7 +109,7 @@ public class ResenaMySQL implements Dao<Resena>{
 	}
 	
 
-	public void agregar(Resena resena) {
+	public Integer agregar(Resena resena) {
 		try(Connection con = getConexion()){
 			try(PreparedStatement ps = con.prepareStatement(sqlInsert)){
 				ps.setString(1, resena.getValoracion());
@@ -125,6 +125,7 @@ public class ResenaMySQL implements Dao<Resena>{
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
 		}
+		return null;
 		
 	}
 	
