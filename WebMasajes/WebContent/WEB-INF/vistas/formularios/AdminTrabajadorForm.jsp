@@ -11,15 +11,15 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="nombre">Nombre</label>
-	    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜ?¿!¡,.:;-_/*'&$€%@ ]){2,40}" value="${trabajador.nombre}"  required>
+	    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜÑ ]){2,40}" value="${trabajador.nombre}"  required>
 	  </div>
 	  <div class="form-group">
 	    <label for="apellidos">Apellidos</label>
-	    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido1 Apellidos2" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜ?¿!¡,.:;-_/*'&$€%@ ]){2,100}" value="${trabajador.apellidos}"  required>
+	    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido1 Apellidos2" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜÑ ]){2,100}" value="${trabajador.apellidos}"  required>
 	  </div>
 	  <div class="form-group">
 	    <label for="dni">DNI</label>
-	    <input type="text" class="form-control" id="dni" name="dni" placeholder="00000000P" pattern="([0-9]{8}[A-Za-z]{1})" value="${trabajador.dni}"  required>
+	    <input type="text" class="form-control" id="dni" name="dni" placeholder="00000000P" pattern="([A-Za-z0-9]{1}[0-9]{7}[A-Za-z]{1})" value="${trabajador.dni}"  required>
 	  </div>
 	  <button type="submit" class="btn btn-success" >Aceptar</button>
 	</form>

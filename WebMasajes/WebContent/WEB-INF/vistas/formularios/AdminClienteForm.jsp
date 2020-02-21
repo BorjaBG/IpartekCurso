@@ -11,15 +11,15 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="nombre">Nombre</label>
-	    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜ?¿!¡,.:;-_/*'&$€%@ ]){2,40}" value="${cliente.nombre}"  required>
+	    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜÑ ]){2,40}" value="${cliente.nombre}"  required>
 	  </div>
 	  <div class="form-group">
 	    <label for="apellidos">Apellidos</label>
-	    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido1 Apellidos2" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜ?¿!¡,.:;-_/*'&$€%@ ]){2,100}" value="${cliente.apellidos}"  required>
+	    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido1 Apellidos2" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜÑ ]){2,100}" value="${cliente.apellidos}"  required>
 	  </div>
 	  <div class="form-group">
 	    <label for="dni">DNI</label>
-	    <input type="text" class="form-control" id="dni" name="dni" placeholder="00000000P" pattern="([0-9]{8}[A-Za-z]{1})" value="${cliente.dni}"  required>
+	    <input type="text" class="form-control" id="dni" name="dni" placeholder="00000000P" pattern="([A-Za-z0-9]{1}[0-9]{7}[A-Za-z]{1})" value="${cliente.dni}"  required>
 	  </div>
 	  <div class="form-group">
 	    <label for="telefono">Telefono</label>
@@ -27,7 +27,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="idActuacion">ID del Servicio</label>
-	    <input type="number" class="form-control" id="idActuacion" name="idActuacion"  value="${cliente.idActuacion}">
+	    <input type="number" class="form-control" id="idActuacion" name="idActuacion" pattern="[0-9]"  value="${cliente.idActuacion}">
 	  </div>
 	  <button type="submit" class="btn btn-success" >Aceptar</button>
 	</form>

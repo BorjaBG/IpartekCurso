@@ -18,7 +18,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM clientegetall";
 	private String sqlSelectId = "CALL clienteGetById(?)";
-	private String sqlInsert = "CALL clienteAñadir(?,?,?,?,?,?,?)";
+	private String sqlInsert = "CALL clienteAñadir(?,?,?,?,?,?)";
 	private String sqlDelete = "CALL clienteDelete(?)";
 	private String sqlUpdate = "CALL clienteUpdate(?,?,?,?,?,?)";
 	

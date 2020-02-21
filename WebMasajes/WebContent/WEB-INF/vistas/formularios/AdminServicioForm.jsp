@@ -11,7 +11,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="nombre">Nombre</label>
-	    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜ?¿!¡,.:;-_/*'&$€%@ ]){2,150}" value="${servicio.nombre}"  required>
+	    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" pattern="([A-Za-z0-9éáíóúñüÁÉÍÓÚÜÑ ]){2,50}" value="${servicio.nombre}"  required>
 	  </div>
 	  <div class="form-group">
 	    <label for="precio">Precio</label>
