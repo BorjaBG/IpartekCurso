@@ -53,11 +53,16 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Pagina Principal <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="/WebMasajes/Index">Pagina Principal <span class="sr-only">(current)</span></a>
 	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/WebMasajes/AdminIndex">Link</a>
-	      </li>
+	      <c:choose>
+	      	<c:when test="${sessionScope.email != null}">
+	      		<li class="nav-item">
+	        		<a class="nav-link" href="/WebMasajes/AdminIndex">Administracion</a>
+	      		</li>
+	      	</c:when>
+	      </c:choose>
+	      
 	      <!-- <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          Dropdown
@@ -83,7 +88,7 @@
 					</c:when>
 					<c:otherwise>
 						<ul class="navbar-nav">
-							 <a class="nav-link" href="/WebPersonas/login"><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button></a>
+							 <a class="nav-link" href="/WebMasajes/login"><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button></a>
 						</ul>
 					</c:otherwise>
 			</c:choose>
