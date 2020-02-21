@@ -26,7 +26,6 @@ public class AdminClienteController extends HttpServlet {
 		}
 		
 		if(fallo) {
-			System.out.println(Global.daoCliente.obtenerTodos().toString());
 			request.setAttribute("clientes", Global.daoCliente.obtenerTodos());
 			request.getRequestDispatcher("/WEB-INF/vistas/admin/AdminCliente.jsp").forward(request, response);
 		}
