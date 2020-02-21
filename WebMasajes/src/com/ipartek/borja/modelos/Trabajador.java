@@ -24,6 +24,11 @@ public class Trabajador {
 		setDni(dni);
 	}
 	
+	public Trabajador(String nombre) {
+		setNombre(nombre);
+	}
+	
+	
 	public int getId() {
 		return id;
 	}

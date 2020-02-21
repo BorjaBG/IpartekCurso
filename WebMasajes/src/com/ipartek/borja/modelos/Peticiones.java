@@ -1,5 +1,7 @@
 package com.ipartek.borja.modelos;
 
+import java.sql.Date;
+
 public class Peticiones {
 	
 	private int idValoracion;
@@ -13,6 +15,10 @@ public class Peticiones {
 	private String valoracion;
 	private double precio;
 	private Servicio servicio;
+	private Cliente cliente;
+	private Trabajador trabajador;
+	private Resena resenas;
+	private Date fecha;
 	
 	public Peticiones() {
 		
@@ -23,6 +29,15 @@ public class Peticiones {
 		setValoracion(valoracion);
 		setResena(resena);
 		setServicio(servicio);
+	}
+	
+	public Peticiones(int idValoracion, Servicio servicio, Cliente cliente, Trabajador trabajador, Resena resena, Date fecha) {
+		setIdValoracion(idValoracion);
+		setServicio(servicio);
+		setCliente(cliente);
+		setTrabajador(trabajador);
+		setResenas(resena);
+		setFecha(fecha);
 	}
 
 	public int getIdValoracion() {
@@ -113,10 +128,44 @@ public class Peticiones {
 		this.servicio = servicio;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Trabajador getTrabajador() {
+		return trabajador;
+	}
+
+	public void setTrabajador(Trabajador trabajador) {
+		this.trabajador = trabajador;
+	}
+
+	public Resena getResenas() {
+		return resenas;
+	}
+
+	public void setResenas(Resena resenas) {
+		this.resenas = resenas;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + idCliente;
 		result = prime * result + idServicio;
 		result = prime * result + idTrabajador;
@@ -128,6 +177,9 @@ public class Peticiones {
 		temp = Double.doubleToLongBits(precio);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((resena == null) ? 0 : resena.hashCode());
+		result = prime * result + ((resenas == null) ? 0 : resenas.hashCode());
+		result = prime * result + ((servicio == null) ? 0 : servicio.hashCode());
+		result = prime * result + ((trabajador == null) ? 0 : trabajador.hashCode());
 		result = prime * result + ((valoracion == null) ? 0 : valoracion.hashCode());
 		return result;
 	}
@@ -141,6 +193,16 @@ public class Peticiones {
 		if (getClass() != obj.getClass())
 			return false;
 		Peticiones other = (Peticiones) obj;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (fecha == null) {
+			if (other.fecha != null)
+				return false;
+		} else if (!fecha.equals(other.fecha))
+			return false;
 		if (idCliente != other.idCliente)
 			return false;
 		if (idServicio != other.idServicio)
@@ -171,6 +233,21 @@ public class Peticiones {
 				return false;
 		} else if (!resena.equals(other.resena))
 			return false;
+		if (resenas == null) {
+			if (other.resenas != null)
+				return false;
+		} else if (!resenas.equals(other.resenas))
+			return false;
+		if (servicio == null) {
+			if (other.servicio != null)
+				return false;
+		} else if (!servicio.equals(other.servicio))
+			return false;
+		if (trabajador == null) {
+			if (other.trabajador != null)
+				return false;
+		} else if (!trabajador.equals(other.trabajador))
+			return false;
 		if (valoracion == null) {
 			if (other.valoracion != null)
 				return false;
@@ -184,7 +261,8 @@ public class Peticiones {
 		return "Peticiones [idValoracion=" + idValoracion + ", idServicio=" + idServicio + ", idTrabajador="
 				+ idTrabajador + ", idCliente=" + idCliente + ", nombreServicio=" + nombreServicio
 				+ ", nombreTrabajador=" + nombreTrabajador + ", nombreCliente=" + nombreCliente + ", resena=" + resena
-				+ ", valoracion=" + valoracion + ", precio=" + precio + "]";
+				+ ", valoracion=" + valoracion + ", precio=" + precio + ", servicio=" + servicio + ", cliente="
+				+ cliente + ", trabajador=" + trabajador + ", resenas=" + resenas + ", fecha=" + fecha + "]";
 	}
 
 }

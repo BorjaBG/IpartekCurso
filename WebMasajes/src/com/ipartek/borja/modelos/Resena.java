@@ -16,6 +16,10 @@ public class Resena {
 		this(0, valoracion, resena);
 	}
 	
+	public Resena(String valoracion) {
+		setValoracion(valoracion);
+	}
+	
 	public Resena() {
 		
 	}

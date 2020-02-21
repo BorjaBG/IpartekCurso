@@ -10,13 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-
+import com.ipartek.borja.modelos.Actuaciones;
+import com.ipartek.borja.modelos.Cliente;
 import com.ipartek.borja.modelos.Peticiones;
 import com.ipartek.borja.modelos.Resena;
 import com.ipartek.borja.modelos.Servicio;
+import com.ipartek.borja.modelos.Trabajador;
 
 public class PeticionesMySQL implements Dao<Peticiones>{
 	
+	private static final String SELECT_ACTUACIONES = "SELECT * FROM actuacionesgetall";
 	private String url;
 	private String usuario;
 	private String contraseña;
@@ -84,6 +87,33 @@ public class PeticionesMySQL implements Dao<Peticiones>{
 									rs.getString("valoracion"),
 									rs.getString("reseña"),
 									new Servicio(rs.getString("servicio.nombre"))));
+						}
+						return peticiones;
+					}
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException("Error al obtener la persona id: ", e);
+			}
+		}
+		
+		public Iterable<Peticiones> obtenerTodosActuaciones() {
+			
+			try (Connection con = DriverManager.getConnection(url, usuario, contraseña)) {
+				try(PreparedStatement ps = con.prepareStatement(SELECT_ACTUACIONES)) {
+					//ps.setInt(1, id);
+					try(ResultSet rs = ps.executeQuery()){
+						ArrayList<Peticiones> peticiones = new ArrayList<>();
+						while(rs.next()) {
+							/*idV = ;
+							valoracion = rs.getString("valoracion");
+							resena = rs.getString("reseña");
+							nombre = rs.getString("servicio.nombre");*/
+							peticiones.add(new Peticiones(rs.getInt("idValoracion"),
+									new Servicio(rs.getString("servicio.nombre")),
+									new Cliente(rs.getString("cliente.nombre")),
+									new Trabajador(rs.getString("trabajador.nombre")),
+									new Resena(rs.getString("resena.valoracion")),
+									rs.getDate("fecha")));
 						}
 						return peticiones;
 					}

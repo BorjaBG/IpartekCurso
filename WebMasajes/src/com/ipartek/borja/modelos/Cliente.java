@@ -26,6 +26,10 @@ public class Cliente {
 		setIdActuacion(idActuacion);
 	}
 	
+	public Cliente(String nombre) {
+		setNombre(nombre);
+	}
+	
 	public Cliente() {
 		
 	}
