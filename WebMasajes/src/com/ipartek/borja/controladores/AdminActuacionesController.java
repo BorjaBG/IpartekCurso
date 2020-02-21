@@ -16,7 +16,7 @@ public class AdminActuacionesController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setAttribute("valoraciones", Global.daoPeticiones.obtenerTodos());
+		request.setAttribute("actuaciones", Global.daoActuaciones.obtenerTodos());
 		request.getRequestDispatcher("/WEB-INF/vistas/admin/AdminActuaciones.jsp").forward(request, response);
 	}
 

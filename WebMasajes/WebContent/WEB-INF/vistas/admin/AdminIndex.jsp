@@ -26,7 +26,7 @@
 		
 		<div class="row align-items-center">
 			<div class="col py-3 px-lg-5">
-				<button type="button" class="btn btn-primary btn-lg btn-block">Servicios ofrecidos</button>
+				<a href="/WebMasajes/AdminActuaciones"><button type="button" class="btn btn-primary btn-lg btn-block">Servicios ofrecidos</button></a>
 			</div>
 		</div>
 		

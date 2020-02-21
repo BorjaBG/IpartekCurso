@@ -11,13 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 import com.ipartek.borja.modelos.Actuaciones;
+import com.ipartek.borja.modelos.Cliente;
+import com.ipartek.borja.modelos.Resena;
+import com.ipartek.borja.modelos.Servicio;
+import com.ipartek.borja.modelos.Trabajador;
 
 public class ActuacionesMySQL implements Dao<Actuaciones>{
 	
@@ -118,7 +120,12 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 				try (ResultSet rs = cs.executeQuery()) {
 					ArrayList<Actuaciones> actuaciones = new ArrayList<>();
 					while (rs.next()) {
-						actuaciones.add(new Actuaciones(rs.getInt("idActuaciones"), rs.getInt("idServicio"), rs.getInt("idTrabajador"), rs.getInt("idValoracion"), rs.getDate("fecha")));
+						actuaciones.add(new Actuaciones(rs.getInt("idActuaciones"),
+								new Servicio(rs.getString("nombreS")),
+								new Cliente(rs.getString("nombreC")),
+								new Trabajador(rs.getString("nombreT")),
+								new Resena(rs.getString("valoracion")),
+								rs.getDate("fecha")));
 					}
 					return actuaciones;
 				}

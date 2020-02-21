@@ -6,12 +6,12 @@
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
+					<th>ID</th>
 					<th>Servicio</th>
+					<th>Cliente</th>
 					<th>Trabajador</th>
 					<th>Valoracion</th>
 					<th>Fecha</th>
-					<th>Cliente</th>
-					<th>Trabajador</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -19,10 +19,12 @@
 			<tbody>
 				<c:forEach items="${actuaciones}" var="actuacion">
 					<tr>
-						<th>${valoracion.idValoracion}</th>
-						<td>${valoracion.valoracion}</td>
-						<td>${valoracion.resena}</td>
-						<td>${valoracion.servicio.nombre}</td>
+						<th>${actuacion.idActuaciones}</th>
+						<td>${actuacion.servicio.nombre}</td>
+						<td>${actuacion.cliente.nombre}</td>
+						<td>${actuacion.trabajador.nombre}</td>
+						
+						<td>${actuacion.fecha}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
