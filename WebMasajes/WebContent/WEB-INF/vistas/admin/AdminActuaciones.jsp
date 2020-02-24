@@ -3,6 +3,10 @@
 <!DOCTYPE html>
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
+		<div>
+			<a href="ActuacionesForm?&op=agregar"><button title="añadir" id="btn-anadir" type="button" class="btn btn-success">Añadir</button></a>
+		</div>
+
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -23,7 +27,7 @@
 						<td>${actuacion.servicio.nombre}</td>
 						<td>${actuacion.cliente.nombre}</td>
 						<td>${actuacion.trabajador.nombre}</td>
-						
+						<td>${actuacion.resenas.valoracion}</td>
 						<td>${actuacion.fecha}</td>
 					</tr>
 				</c:forEach>

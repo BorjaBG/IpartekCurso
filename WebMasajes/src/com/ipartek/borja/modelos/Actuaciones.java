@@ -22,12 +22,12 @@ public class Actuaciones {
 		setFecha(fecha);
 	}
 	
-	public Actuaciones(int idActuaciones, Servicio servicio, Cliente cliente, Trabajador trabajador, Resena resena, Date fecha) {
+	public Actuaciones(int idActuaciones, Servicio servicio, Cliente cliente, Trabajador trabajador, Resena resenas, Date fecha) {
 		setIdActuaciones(idActuaciones);
 		setServicio(servicio);
 		setCliente(cliente);
 		setTrabajador(trabajador);
-		setResenas(resena);
+		setResenas(resenas);
 		setFecha(fecha);
 	}
 	
