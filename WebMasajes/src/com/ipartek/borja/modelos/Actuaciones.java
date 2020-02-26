@@ -1,6 +1,6 @@
 package com.ipartek.borja.modelos;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Actuaciones {
 	
@@ -14,6 +14,15 @@ public class Actuaciones {
 	private Trabajador trabajador;
 	private Resena resenas;
 	
+	public Actuaciones(Servicio servicio, Cliente cliente, Trabajador trabajador, Resena resenas, Date fecha) {
+		setServicio(servicio);
+		setCliente(cliente);
+		setTrabajador(trabajador);
+		setResenas(resenas);
+		setFecha(fecha);
+	}
+	
+	
 	public Actuaciones(int idActuaciones, int idServicio, int idCliente, int idValoracion, Date fecha) {
 		setIdActuaciones(idActuaciones);
 		setIdServicio(idServicio);
@@ -22,12 +31,12 @@ public class Actuaciones {
 		setFecha(fecha);
 	}
 	
-	public Actuaciones(int idActuaciones, Servicio servicio, Cliente cliente, Trabajador trabajador, Resena resenas, Date fecha) {
+	public Actuaciones(int idActuaciones, Servicio servicio, Trabajador trabajador, Resena resenas, Cliente cliente, Date fecha) {
 		setIdActuaciones(idActuaciones);
 		setServicio(servicio);
-		setCliente(cliente);
 		setTrabajador(trabajador);
 		setResenas(resenas);
+		setCliente(cliente);
 		setFecha(fecha);
 	}
 	
@@ -71,8 +80,8 @@ public class Actuaciones {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(Date date) {
+		this.fecha = date;
 	}
 
 	public Servicio getServicio() {

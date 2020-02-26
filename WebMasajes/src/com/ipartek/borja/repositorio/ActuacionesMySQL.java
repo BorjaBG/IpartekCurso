@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.naming.Context;
@@ -25,10 +26,10 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 	
 	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM actuacionesgetall";
-	private String sqlSelectId = "CALL trabajadorGetById(?)";
-	private String sqlInsert = "CALL clienteAñadir(?,?,?,?,?,?)";
-	private String sqlDelete = "CALL clienteDelete(?)";
-	private String sqlUpdate = "CALL clienteUpdate(?,?,?,?)";
+	private String sqlSelectId = "CALL actuacionesGetById(?)";
+	private String sqlInsert = "CALL actuacionesAñadir(?,?,?,?,?,?,?,?)";
+	private String sqlDelete = "CALL actuacionesDelete(?)";
+	private String sqlUpdate = "CALL actuacionesUpdate(?,?,?,?,?,?,?,?)";
 	
 	private static DataSource pool;
 	
@@ -122,9 +123,9 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 					while (rs.next()) {
 						actuaciones.add(new Actuaciones(rs.getInt("idActuaciones"),
 								new Servicio(rs.getString("nombreS")),
-								new Cliente(rs.getString("nombreC")),
-								new Trabajador(rs.getString("nombreT")),
+								new Trabajador(rs.getString("nombreT"), rs.getString("apellidosT")),
 								new Resena(rs.getString("valoracion")),
+								new Cliente(rs.getString("nombreC"), rs.getString("apellidosC")),
 								rs.getDate("fecha")));
 					}
 					return actuaciones;
@@ -144,7 +145,12 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 				try(ResultSet rs = cs.executeQuery()){
 
 					if(rs.next()) {
-						return new Actuaciones(rs.getInt("idActuaciones"), rs.getInt("idServicio"), rs.getInt("idTrabajador"), rs.getInt("idValoracion"), rs.getDate("fecha"));
+						return new Actuaciones(rs.getInt("idActuaciones"),
+								new Servicio(rs.getString("nombreS")),
+								new Trabajador(rs.getString("nombreT"), rs.getString("apellidosT")),
+								new Resena(rs.getString("valoracion")),
+								new Cliente(rs.getString("nombreC"), rs.getString("apellidosC")),
+								rs.getDate("fecha"));
 					} else {
 						return null;
 					}
@@ -163,8 +169,9 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 				cs.setInt(2, actuaciones.getIdServicio());
 				cs.setInt(3, actuaciones.getIdTrabajador());
 				cs.setInt(4, actuaciones.getIdValoracion());
-				cs.setDate(5, actuaciones.getFecha());
+				//cs.setDate(5, actuaciones.getFecha());
 				cs.registerOutParameter(6, java.sql.Types.INTEGER);
+				//8
 				
 				int numeroRegistrosModificados = cs.executeUpdate();
 				
@@ -201,12 +208,23 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 		
 		try (Connection con = getConexion()) {
 			try(CallableStatement cs = con.prepareCall(sqlUpdate)) {
+				/*System.out.println(actuaciones.getIdActuaciones());
+				System.out.println(actuaciones.getServicio().getNombre().toString());
+				System.out.println(actuaciones.getCliente().getNombre().toString());
+				System.out.println(actuaciones.getCliente().getApellidos().toString());
+				System.out.println(actuaciones.getTrabajador().getNombre().toString());
+				System.out.println(actuaciones.getTrabajador().getApellidos().toString());
+				System.out.println(actuaciones.getResenas().getValoracion().toString());
+				System.out.println(new Timestamp(actuaciones.getFecha().getTime()).toString());*/
 				cs.setInt(1, actuaciones.getIdActuaciones());
-				cs.setInt(2, actuaciones.getIdServicio());
-				cs.setInt(3, actuaciones.getIdTrabajador());
-				cs.setInt(4, actuaciones.getIdValoracion());
-				cs.setDate(5, actuaciones.getFecha());
-//Timestamp
+				cs.setString(2, actuaciones.getServicio().getNombre());
+				cs.setString(3, actuaciones.getCliente().getNombre());
+				cs.setString(4, actuaciones.getCliente().getApellidos());
+				cs.setString(5, actuaciones.getTrabajador().getNombre());
+				cs.setString(6, actuaciones.getTrabajador().getApellidos());
+				cs.setString(7, actuaciones.getResenas().getValoracion());
+				cs.setTimestamp(8, new Timestamp(actuaciones.getFecha().getTime()));
+
 				int numeroRegistrosModificados = cs.executeUpdate();
 
 				if(numeroRegistrosModificados != 1) {

@@ -25,10 +25,14 @@
 					<tr>
 						<th>${actuacion.idActuaciones}</th>
 						<td>${actuacion.servicio.nombre}</td>
-						<td>${actuacion.cliente.nombre}</td>
-						<td>${actuacion.trabajador.nombre}</td>
+						<td>${actuacion.cliente.nombre}  ${actuacion.cliente.apellidos}</td>
+						<td>${actuacion.trabajador.nombre}  ${actuacion.trabajador.apellidos}</td>
 						<td>${actuacion.resenas.valoracion}</td>
 						<td>${actuacion.fecha}</td>
+						<td>
+							<a href="ActuacionesForm?id=${actuacion.idActuaciones}&op=modificar"><button title="modificar" id="btn-modificar" type="button" class="btn btn-warning">Modificar</button></a>
+							<a href="AdminCliente?id=${actuacion.idActuaciones}&op=eliminar"><button title="eliminar" id="btn-eliminar" type="button" class="btn btn-danger">Eliminar</button></a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

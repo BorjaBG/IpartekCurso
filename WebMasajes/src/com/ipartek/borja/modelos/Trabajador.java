@@ -28,6 +28,11 @@ public class Trabajador {
 		setNombre(nombre);
 	}
 	
+	public Trabajador(String nombre, String apellidos) {
+		setNombre(nombre);
+		setApellidos(apellidos);
+	}
+	
 	
 	public int getId() {
 		return id;

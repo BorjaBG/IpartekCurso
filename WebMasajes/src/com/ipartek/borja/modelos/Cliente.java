@@ -30,6 +30,11 @@ public class Cliente {
 		setNombre(nombre);
 	}
 	
+	public Cliente(String nombre, String apellidos) {
+		setNombre(nombre);
+		setApellidos(apellidos);
+	}
+	
 	public Cliente() {
 		
 	}
