@@ -18,9 +18,9 @@ public class ClienteMySQL implements Dao<Cliente>{
 	//Cambiar llamadas
 	private String sqlSelect = "SELECT * FROM clientegetall";
 	private String sqlSelectId = "CALL clienteGetById(?)";
-	private String sqlInsert = "CALL clienteAñadir(?,?,?,?,?,?)";
+	private String sqlInsert = "CALL clienteAñadir(?,?,?,?,?)";
 	private String sqlDelete = "CALL clienteDelete(?)";
-	private String sqlUpdate = "CALL clienteUpdate(?,?,?,?,?,?)";
+	private String sqlUpdate = "CALL clienteUpdate(?,?,?,?,?)";
 	
 	private static DataSource pool;
 	
@@ -115,7 +115,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try (ResultSet rs = cs.executeQuery()) {
 					ArrayList<Cliente> clientes = new ArrayList<>();
 					while (rs.next()) {
-						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idActuacion")));
+						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono")));
 					}
 					return clientes;
 				}
@@ -134,7 +134,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try(ResultSet rs = cs.executeQuery()){
 
 					if(rs.next()) {
-						return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"), rs.getInt("idActuacion"));
+						return new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono"));
 					} else {
 						return null;
 					}
@@ -153,8 +153,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				cs.setString(2, cliente.getApellidos());
 				cs.setString(3, cliente.getDni());
 				cs.setInt(4, cliente.getTelefono());
-				cs.setInt(5, cliente.getIdActuacion());
-				cs.registerOutParameter(6, java.sql.Types.INTEGER);
+				cs.registerOutParameter(5, java.sql.Types.INTEGER);
 				
 				int numeroRegistrosModificados = cs.executeUpdate();
 				
@@ -162,7 +161,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 					throw new RuntimeException("Resultado no esperado en la INSERT: " +
 							numeroRegistrosModificados);
 				}
-				return cs.getInt(6);
+				return cs.getInt(5);
 			}
 		}catch(SQLException e) {
 			throw new RuntimeException("Error al obtener todos los registros", e);
@@ -195,8 +194,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				cs.setString(2, cliente.getApellidos());
 				cs.setString(3, cliente.getDni());
 				cs.setInt(4, cliente.getTelefono());
-				cs.setInt(5, cliente.getIdActuacion());
-				cs.setInt(6, cliente.getId());
+				cs.setInt(5, cliente.getId());
 
 				int numeroRegistrosModificados = cs.executeUpdate();
 

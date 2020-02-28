@@ -40,7 +40,6 @@ public class ClienteFormController extends HttpServlet {
 				String apellidos = request.getParameter("apellidos");
 				String dni = request.getParameter("dni");
 				String telefono = request.getParameter("telefono");
-				String idActuacion = request.getParameter("idActuacion");
 				
 							
 							
@@ -48,7 +47,7 @@ public class ClienteFormController extends HttpServlet {
 							
 				switch(op) {
 				case "agregar":
-					cliente = new Cliente(nombre, apellidos, dni, Integer.parseInt(telefono), Integer.parseInt(idActuacion));
+					cliente = new Cliente(nombre, apellidos, dni, Integer.parseInt(telefono));
 					Global.daoCliente.agregar(cliente);
 					/*if(servicio.isCorrecto()) {
 						dao.agregar(servicio);
@@ -57,7 +56,7 @@ public class ClienteFormController extends HttpServlet {
 					response.sendRedirect(request.getContextPath() + "/AdminCliente");
 					break;
 				case "modificar":
-					cliente = new Cliente(Integer.parseInt(id), nombre, apellidos, dni, Integer.parseInt(telefono), Integer.parseInt(idActuacion));
+					cliente = new Cliente(Integer.parseInt(id), nombre, apellidos, dni, Integer.parseInt(telefono));
 					Global.daoCliente.actualizar(cliente);
 					/*if(servicio.isCorrecto()) {
 						dao.actualizar(servicio);
