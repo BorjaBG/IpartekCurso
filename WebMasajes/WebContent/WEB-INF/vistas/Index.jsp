@@ -11,7 +11,6 @@
 				<div class="col-12 col-sm-4 col-md-4 col-lg-2">
 					<div class="card" style="width: 13rem;">
 						<div class="card-body">
-								<!-- <img src="${libro.imagen}" class="card-img" alt="Imagen del libro">  -->
 							<p class="card-title">${masaje.nombre}</p>
 							<h2 class="card-text">${masaje.precio} €</h2>
 						</div>

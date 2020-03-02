@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import com.ipartek.borja.modelos.Actuaciones;
+
 import com.ipartek.borja.modelos.Cliente;
 import com.ipartek.borja.modelos.Peticiones;
 import com.ipartek.borja.modelos.Resena;
@@ -61,6 +61,7 @@ public class PeticionesMySQL implements Dao<Peticiones>{
 				
 		//FIN SINGLETON
 		
+		@SuppressWarnings("unused")
 		private Connection getConexion(){
 			//System.out.println(url + "\n" + usuario + "\n" + contraseña + "\n");
 			try {

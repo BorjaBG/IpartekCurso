@@ -6,13 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ipartek.borja.globales.Global;
-import com.ipartek.borja.modelos.Servicio;
-import com.ipartek.borja.repositorio.Dao;
 
-/**
- * Servlet implementation class IndexController
- */
+import com.ipartek.borja.globales.Global;
+
+
 @WebServlet("/Index")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
