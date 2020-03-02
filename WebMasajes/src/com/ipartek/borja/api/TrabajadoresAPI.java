@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.ipartek.borja.globales.Global;
-import com.ipartek.borja.modelos.Cliente;
+import com.ipartek.borja.modelos.Trabajador;
 
 
-@WebServlet("/api/clientes/*")
-public class ClientesApi extends HttpServlet {
+@WebServlet("/api/trabajadores/*")
+public class TrabajadoresAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String URL_ID_VALIDA = "^/\\d+$";
@@ -25,20 +25,20 @@ public class ClientesApi extends HttpServlet {
 		String path = request.getPathInfo();
 		
 		if (path == null || path.equals("/")) {
-			out.write(gson.toJson(Global.daoCliente.obtenerTodos()));
+			out.write(gson.toJson(Global.daoTrabajador.obtenerTodos()));
 			
 		}
 
 		if (path.matches(URL_ID_VALIDA)) {
 			int id = Integer.parseInt(path.substring(1));
 
-			Cliente cliente = Global.daoCliente.obtenerPorId(id);
+			Trabajador trabajador = Global.daoTrabajador.obtenerPorId(id);
 			//System.out.println(trabajador.toString());
 
-			if(cliente == null) {
+			if(trabajador == null) {
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			} else {
-				out.write(gson.toJson(cliente));
+				out.write(gson.toJson(trabajador));
 				response.setStatus(HttpServletResponse.SC_OK);
 			}
 
@@ -50,20 +50,20 @@ public class ClientesApi extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = extraerJSON(request);
 
-		Cliente cliente = gson.fromJson(json, Cliente.class);
+		Trabajador trabajador = gson.fromJson(json, Trabajador.class);
 		
-		Global.daoCliente.agregar(cliente);
-		response.getWriter().write(gson.toJson(cliente));
+		Global.daoTrabajador.agregar(trabajador);
+		response.getWriter().write(gson.toJson(trabajador));
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = extraerJSON(request);
 
-		Cliente cliente = gson.fromJson(json, Cliente.class);
+		Trabajador trabajador = gson.fromJson(json, Trabajador.class);
 		
-		Global.daoCliente.actualizar(cliente);
-		response.getWriter().write(gson.toJson(cliente));
+		Global.daoTrabajador.actualizar(trabajador);
+		response.getWriter().write(gson.toJson(trabajador));
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
@@ -77,11 +77,10 @@ public class ClientesApi extends HttpServlet {
 
 		int id = Integer.parseInt(path.substring(1));
 
-		Global.daoCliente.eliminar(id);
+		Global.daoTrabajador.eliminar(id);
 
 		response.getWriter().write("EL CLIENTE HA SIDO ELIMINADO");
 	}
-	
 	
 	private String extraerJSON(HttpServletRequest request) throws IOException {
 		BufferedReader br = request.getReader();
