@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
-	<div class="container-fluid">
+	<div class="container-fluid cuerpo-tablas" id="links">
 		<div class="row">
 			<div class="col py-3 px-lg-5">
 				<a href="/WebMasajes/AdminServicio"><button type="button" class="btn btn-info btn-lg btn-block">Servicios</button></a>
@@ -16,7 +16,7 @@
 		
 		<div class="row">
 			<div class="col py-3 px-lg-5">
-				<a href="/WebMasajes/AdminValoracion"><button type="button" class="btn btn-primary btn-lg btn-block">Valoraciones</button></a>
+				<a href="/WebMasajes/AdminValoracion"><button type="button" class="btn btn-info btn-lg btn-block">Valoraciones</button></a>
 			</div>
 			
 			<div class="col py-3 px-lg-5">
@@ -26,7 +26,7 @@
 		
 		<div class="row align-items-center">
 			<div class="col py-3 px-lg-5">
-				<a href="/WebMasajes/AdminActuaciones"><button type="button" class="btn btn-primary btn-lg btn-block">Servicios ofrecidos</button></a>
+				<a href="/WebMasajes/AdminActuaciones"><button type="button" class="btn btn-info btn-lg btn-block">Servicios ofrecidos</button></a>
 			</div>
 		</div>
 		

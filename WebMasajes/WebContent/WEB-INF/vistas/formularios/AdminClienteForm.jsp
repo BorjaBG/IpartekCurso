@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
-	<form action="ClienteForm" method="post">
+	<form action="ClienteForm" method="post" class="cuerpo-tablas">
 		<input type="hidden" id="op" name="op" value="${op}"/>
 	  <div class="form-group">
 	    <label for="id">ID</label>

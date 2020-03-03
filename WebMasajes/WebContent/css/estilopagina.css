@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+body{
+	background-color: #E6E6FA;
+}
+
+#links a{
+	text-decoration: none;
+}
+
+.btn-añadir{
+	padding-top: 1.5em;
+}
+
+.cuerpo-tablas{
+	padding-top: 2em;
+	padding-bottom: 2em;
+}

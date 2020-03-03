@@ -3,9 +3,11 @@
 <!DOCTYPE html>
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
-	<div>
+	<div class="btn-añadir">
 		<a href="TrabajadorForm?&op=agregar"><button title="añadir" id="btn-anadir" type="button" class="btn btn-success">Añadir</button></a>
 	</div>
+	
+	<div class="cuerpo-tablas">
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -32,6 +34,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		
+	</div>
 
 <%@ include file="/WEB-INF/vistas/includes/pie.jsp"%>
