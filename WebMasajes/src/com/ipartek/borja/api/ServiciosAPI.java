@@ -1,27 +1,56 @@
 package com.ipartek.borja.api;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ws.rs.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import com.google.gson.Gson;
 import com.ipartek.borja.globales.Global;
 import com.ipartek.borja.modelos.Servicio;
 
 
-@WebServlet("/api/servicios/*")
-public class ServiciosAPI extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Path("/servicios")
+@Produces("application/json")
+@Consumes("application/json")
+public class ServiciosAPI {
 	
-	private static final String URL_ID_VALIDA = "^/\\d+$";
-	private static Gson gson = new Gson();
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	@GET
+	public Iterable<Servicio> getAll(){
+		return Global.daoServicio.obtenerTodos();
+	}
+	
+	@GET
+	@Path("/{id}")
+	public Servicio getById(@PathParam("id") int id) {
+		return Global.daoServicio.obtenerPorId(id);
+	}
+	
+	@POST
+	public Servicio insert(Servicio servicio) {
+		Global.daoServicio.agregar(servicio);
+		return servicio;
+	}
+	
+	@PUT
+	@Path("/{id}")
+	public Servicio update(@PathParam("id") int id, Servicio servicio) {
+			//throw new WebApplicationException("No se ha encontrado el id a modificar", Status.NOT_FOUND);
+		servicio.setId(id);
+		Global.daoServicio.actualizar(servicio);
+		return servicio;
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public String delete(@PathParam("id") int id) {
+		Global.daoServicio.eliminar(id);
+		return "{}";
+	}
+	
+	/*
+	 	
+	 	private static final String URL_ID_VALIDA = "^/\\d+$";
+		private static Gson gson = new Gson();
+	 	
+	 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		String path = request.getPathInfo();
 		
@@ -94,5 +123,6 @@ public class ServiciosAPI extends HttpServlet {
 
 		return sb.toString();
 	}
+	 */
 
 }
