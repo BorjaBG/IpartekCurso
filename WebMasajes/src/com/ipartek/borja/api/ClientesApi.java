@@ -33,7 +33,6 @@ public class ClientesApi extends HttpServlet {
 			int id = Integer.parseInt(path.substring(1));
 
 			Cliente cliente = Global.daoCliente.obtenerPorId(id);
-			//System.out.println(trabajador.toString());
 
 			if(cliente == null) {
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);

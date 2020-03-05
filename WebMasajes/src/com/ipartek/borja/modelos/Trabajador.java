@@ -1,7 +1,12 @@
 package com.ipartek.borja.modelos;
 
+import com.ipartek.borja.utilidades.Biblioteca;
+
 public class Trabajador {
 
+	private static final String REGEX_DNI = "[XYZ\\d]\\d{7}[A-Z]";
+	private static final String EXCEPTION_NOMBRE_APELLIDOS = "Solo se admiten caracteres de tipo letra y espacio";
+	private static final String REGEX_NOMBRE_APELLIDOS = "[\\p{L} ]+";
 	private int id;
 	private String nombre;
 	private String apellidos;
@@ -47,6 +52,19 @@ public class Trabajador {
 	}
 	
 	public void setNombre(String nombre) {
+		
+		if(nombre == null || nombre.trim().length() == 0) {
+			throw new ModelosException("El nombre es un campo obligatorio");
+		}
+		
+		if(!nombre.matches(REGEX_NOMBRE_APELLIDOS)) {
+			throw new ModelosException(EXCEPTION_NOMBRE_APELLIDOS);
+		}
+
+		if(nombre.length() < 2 && nombre.length() > 41) {
+			throw new ModelosException("El nombre debe contener entre 2 y 40 caracteres");
+		}
+		
 		this.nombre = nombre;
 	}
 	
@@ -55,6 +73,19 @@ public class Trabajador {
 	}
 	
 	public void setApellidos(String apellidos) {
+		
+		if(apellidos == null || apellidos.trim().length() == 0) {
+			throw new ModelosException("Los apellidos son un campo obligatorio");
+		}
+		
+		if(!apellidos.matches(REGEX_NOMBRE_APELLIDOS)) {
+			throw new ModelosException(EXCEPTION_NOMBRE_APELLIDOS);
+		}
+
+		if(apellidos.length() < 2 && nombre.length() > 101) {
+			throw new ModelosException("Los apellidos deben contener entre 2 y 100 caracteres");
+		}
+		
 		this.apellidos = apellidos;
 	}
 	
@@ -63,6 +94,16 @@ public class Trabajador {
 	}
 	
 	public void setDni(String dni) {
+		
+		if(!dni.matches(REGEX_DNI)) {
+			throw new ModelosException("No concuerda con el formato de un DNI");
+		}
+		
+		//Comentado por que fallo con DNIs de la base de datos que no estan validados
+		/*if(!Biblioteca.dniValido(dni)) {
+			throw new ModelosException("El DNI introducido no es valido");
+		}*/
+		
 		this.dni = dni;
 	}
 	

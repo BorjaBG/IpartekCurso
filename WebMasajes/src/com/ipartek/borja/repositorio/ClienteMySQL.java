@@ -115,6 +115,7 @@ public class ClienteMySQL implements Dao<Cliente>{
 				try (ResultSet rs = cs.executeQuery()) {
 					ArrayList<Cliente> clientes = new ArrayList<>();
 					while (rs.next()) {
+						System.out.println(rs.getInt("idCliente") + " " + rs.getString("nombre") + " " + rs.getString("apellidos"));
 						clientes.add(new Cliente(rs.getInt("idCliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("dni"), rs.getInt("telefono")));
 					}
 					return clientes;
