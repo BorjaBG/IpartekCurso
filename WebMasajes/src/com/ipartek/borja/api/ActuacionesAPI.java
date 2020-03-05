@@ -60,12 +60,25 @@ public class ActuacionesAPI extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = extraerJSON(request);
+		String path = request.getPathInfo();
 
-		Actuaciones actuacion = gson.fromJson(json, Actuaciones.class);
+		Actuaciones actuacion = null;
 		
-		Global.daoActuaciones.actualizar(actuacion);
-		response.getWriter().write(gson.toJson(actuacion));
-		response.setStatus(HttpServletResponse.SC_CREATED);
+		if (path == null || path.equals("/")) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		
+		if(path.matches(URL_ID_VALIDA)) {
+			int id = Integer.parseInt(path.substring(1));
+			
+			actuacion.setIdActuaciones(id);
+			actuacion = gson.fromJson(json, Actuaciones.class);
+			Global.daoActuaciones.actualizar(actuacion);
+			response.getWriter().write(gson.toJson(actuacion));
+			response.setStatus(HttpServletResponse.SC_CREATED);
+		}
+		
 	}
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

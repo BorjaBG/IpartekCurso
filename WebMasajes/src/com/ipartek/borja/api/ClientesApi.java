@@ -59,12 +59,24 @@ public class ClientesApi extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = extraerJSON(request);
+		String path = request.getPathInfo();
 
-		Cliente cliente = gson.fromJson(json, Cliente.class);
+		Cliente cliente = null;
 		
-		Global.daoCliente.actualizar(cliente);
-		response.getWriter().write(gson.toJson(cliente));
-		response.setStatus(HttpServletResponse.SC_CREATED);
+		if (path == null || path.equals("/")) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		
+		if(path.matches(URL_ID_VALIDA)) {
+			int id = Integer.parseInt(path.substring(1));
+			
+			cliente.setId(id);
+			cliente = gson.fromJson(json, Cliente.class);
+			Global.daoCliente.actualizar(cliente);
+			response.getWriter().write(gson.toJson(cliente));
+			response.setStatus(HttpServletResponse.SC_CREATED);
+		}
 	}
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

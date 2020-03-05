@@ -59,12 +59,24 @@ public class TrabajadoresAPI extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = extraerJSON(request);
+		String path = request.getPathInfo();
 
-		Trabajador trabajador = gson.fromJson(json, Trabajador.class);
+		Trabajador trabajador = null;
 		
-		Global.daoTrabajador.actualizar(trabajador);
-		response.getWriter().write(gson.toJson(trabajador));
-		response.setStatus(HttpServletResponse.SC_CREATED);
+		if (path == null || path.equals("/")) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		
+		if (path.matches(URL_ID_VALIDA)) {
+			int id = Integer.parseInt(path.substring(1));
+			
+			trabajador.setId(id);
+			trabajador = gson.fromJson(json, Trabajador.class);
+			Global.daoTrabajador.actualizar(trabajador);
+			response.getWriter().write(gson.toJson(trabajador));
+			response.setStatus(HttpServletResponse.SC_CREATED);
+		}
 	}
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

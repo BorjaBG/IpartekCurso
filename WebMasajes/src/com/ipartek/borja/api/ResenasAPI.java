@@ -60,12 +60,23 @@ public class ResenasAPI extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String json = extraerJSON(request);
-
-		Resena resena = gson.fromJson(json, Resena.class);
+		String path = request.getPathInfo();
+		Resena resena = null;
 		
-		Global.daoResena.actualizar(resena);
-		response.getWriter().write(gson.toJson(resena));
-		response.setStatus(HttpServletResponse.SC_CREATED);
+		if (path == null || path.equals("/")) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		
+		if(path.matches(URL_ID_VALIDA)) {
+			int id = Integer.parseInt(path.substring(1));
+			
+			resena.setId(id);
+			resena = gson.fromJson(json, Resena.class);
+			Global.daoResena.actualizar(resena);
+			response.getWriter().write(gson.toJson(resena));
+			response.setStatus(HttpServletResponse.SC_CREATED);
+		}
 	}
 
 
