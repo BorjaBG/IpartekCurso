@@ -2,7 +2,7 @@ package com.ipartek.borja.modelos;
 
 public class Servicio {
 
-	private static final String REGEX_NOMBRE = "[\\\\p{L} ]+";
+	private static final String REGEX_NOMBRE = "[\\p{L} ]+";
 	private int id;
 	private String nombre;
 	private double precio;

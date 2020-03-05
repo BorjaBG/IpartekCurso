@@ -89,7 +89,6 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 	//FIN SINGLETON
 	
 	private Connection getConexion(){
-		//System.out.println(url + "\n" + usuario + "\n" + contraseña + "\n");
 		/*try {
 			return DriverManager.getConnection(url, usuario, contraseña);
 		} catch (SQLException e) {
@@ -204,14 +203,6 @@ public class ActuacionesMySQL implements Dao<Actuaciones>{
 		
 		try (Connection con = getConexion()) {
 			try(CallableStatement cs = con.prepareCall(sqlUpdate)) {
-				/*System.out.println(actuaciones.getIdActuaciones());
-				System.out.println(actuaciones.getServicio().getNombre().toString());
-				System.out.println(actuaciones.getCliente().getNombre().toString());
-				System.out.println(actuaciones.getCliente().getApellidos().toString());
-				System.out.println(actuaciones.getTrabajador().getNombre().toString());
-				System.out.println(actuaciones.getTrabajador().getApellidos().toString());
-				System.out.println(actuaciones.getResenas().getValoracion().toString());
-				System.out.println(new Timestamp(actuaciones.getFecha().getTime()).toString());*/
 				cs.setInt(1, actuaciones.getIdActuaciones());
 				cs.setString(2, actuaciones.getServicio().getNombre());
 				cs.setString(3, actuaciones.getCliente().getNombre());

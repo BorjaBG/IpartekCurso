@@ -67,7 +67,6 @@ public class ServicioMySQL implements Dao<Servicio> {
 	//FIN SINGLETON
 	
 	private Connection getConexion(){
-		//System.out.println(url + "\n" + usuario + "\n" + contraseña + "\n");
 		/*try {
 			return DriverManager.getConnection(url, usuario, contraseña);
 		} catch (SQLException e) {

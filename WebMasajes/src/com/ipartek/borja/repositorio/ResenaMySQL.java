@@ -83,7 +83,6 @@ public class ResenaMySQL implements Dao<Resena>{
 	//FIN SINGLETON
 	
 	private Connection getConexion(){
-		//System.out.println(url + "\n" + usuario + "\n" + contraseña + "\n");
 		try {
 			if (pool == null) {
 				new com.mysql.cj.jdbc.Driver();
