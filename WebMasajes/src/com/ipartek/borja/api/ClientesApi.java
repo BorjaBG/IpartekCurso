@@ -60,7 +60,7 @@ public class ClientesApi extends HttpServlet {
 		String json = extraerJSON(request);
 		String path = request.getPathInfo();
 
-		Cliente cliente = null;
+		Cliente cliente = gson.fromJson(json, Cliente.class);
 		
 		if (path == null || path.equals("/")) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -71,7 +71,7 @@ public class ClientesApi extends HttpServlet {
 			int id = Integer.parseInt(path.substring(1));
 			
 			cliente.setId(id);
-			cliente = gson.fromJson(json, Cliente.class);
+			//cliente = gson.fromJson(json, Cliente.class);
 			Global.daoCliente.actualizar(cliente);
 			response.getWriter().write(gson.toJson(cliente));
 			response.setStatus(HttpServletResponse.SC_CREATED);

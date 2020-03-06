@@ -194,6 +194,8 @@ public class ClienteMySQL implements Dao<Cliente>{
 				cs.setString(3, cliente.getDni());
 				cs.setInt(4, cliente.getTelefono());
 				cs.setInt(5, cliente.getId());
+				
+				System.out.println("Estoy en el update de Clientes" + cliente.getNombre().toString());
 
 				int numeroRegistrosModificados = cs.executeUpdate();
 

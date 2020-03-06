@@ -43,11 +43,15 @@ public class ClienteFormController extends HttpServlet {
 				
 							
 							
-				Cliente cliente = null;
+				Cliente cliente = new Cliente();
 							
 				switch(op) {
 				case "agregar":
-					cliente = new Cliente(nombre, apellidos, dni, Integer.parseInt(telefono));
+					cliente.setNombre(nombre);
+					cliente.setApellidos(apellidos);
+					cliente.setDni(dni);
+					cliente.setTelefono(Integer.parseInt(telefono));
+					//cliente = new Cliente(nombre, apellidos, dni, Integer.parseInt(telefono));
 					Global.daoCliente.agregar(cliente);
 					/*if(servicio.isCorrecto()) {
 						dao.agregar(servicio);
@@ -56,7 +60,13 @@ public class ClienteFormController extends HttpServlet {
 					response.sendRedirect(request.getContextPath() + "/AdminCliente");
 					break;
 				case "modificar":
-					cliente = new Cliente(Integer.parseInt(id), nombre, apellidos, dni, Integer.parseInt(telefono));
+					cliente.setId(Integer.parseInt(id));
+					cliente.setNombre(nombre);
+					cliente.setApellidos(apellidos);
+					cliente.setDni(dni);
+					cliente.setTelefono(Integer.parseInt(telefono));
+					System.out.println(cliente.toString());
+					//cliente = new Cliente(Integer.parseInt(id), nombre, apellidos, dni, Integer.parseInt(telefono));
 					Global.daoCliente.actualizar(cliente);
 					/*if(servicio.isCorrecto()) {
 						dao.actualizar(servicio);

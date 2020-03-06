@@ -51,10 +51,13 @@ public class Cliente {
 	}
 
 	public String getNombre() {
+		//System.out.println("Estoy en el get nombre de Clientes");
 		return nombre;
 	}
 
 	public void setNombre(String nombre) {
+		
+		System.out.println("Estoy en el setter de Cliente" + nombre);
 		
 		if(nombre.toLowerCase() == null || nombre.toLowerCase().trim().length() == 0) {
 			throw new ModelosException("El nombre es un campo obligatorio");

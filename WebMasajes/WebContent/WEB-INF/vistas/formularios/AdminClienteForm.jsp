@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
-	<form action="ClienteForm" method="post" class="cuerpo-tablas">
+	<form action="ClienteForm" method="post" class="cuerpo-tablas" novalidate>
 		<input type="hidden" id="op" name="op" value="${op}"/>
 	  <div class="form-group">
 	    <label for="id">ID</label>
@@ -24,10 +24,6 @@
 	  <div class="form-group">
 	    <label for="telefono">Telefono</label>
 	    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="123456789" pattern="[0-9]{9}" value="${cliente.telefono}"  required>
-	  </div>
-	  <div class="form-group">
-	    <label for="idActuacion">ID del Servicio</label>
-	    <input type="number" class="form-control" id="idActuacion" name="idActuacion" pattern="[0-9]"  value="${cliente.idActuacion}">
 	  </div>
 	  <button type="submit" class="btn btn-success" >Aceptar</button>
 	</form>
