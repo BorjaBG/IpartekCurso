@@ -1,24 +1,55 @@
 package com.ipartek.borja.api;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import com.google.gson.Gson;
+import javax.ws.rs.*;
+
 import com.ipartek.borja.globales.Global;
 import com.ipartek.borja.modelos.Trabajador;
 
 
-@WebServlet("/api/trabajadores/*")
+//@WebServlet("/api/trabajadores/*")
+@Path("/trabajadores")
+@Produces("application/json")
+@Consumes("application/json")
 public class TrabajadoresAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final String URL_ID_VALIDA = "^/\\d+$";
-	private static Gson gson = new Gson();
+	@GET
+	public Iterable<Trabajador> getAll(){
+		return Global.daoTrabajador.obtenerTodos();
+	}
+	
+	@GET
+	@Path("/{id}")
+	public Trabajador getById(@PathParam("id") int id) {
+		return Global.daoTrabajador.obtenerPorId(id);
+	}
+	
+	@POST
+	public Trabajador insert(Trabajador trabajador) {
+		Global.daoTrabajador.agregar(trabajador);
+		return trabajador;
+	}
+	
+	@PUT
+	@Path("/{id}")
+	public Trabajador update(@PathParam("id") int id, Trabajador trabajador) {
+		trabajador.setId(id);
+		Global.daoTrabajador.obtenerPorId(id);
+		return trabajador;
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public String delete(@PathParam("id") int id) {
+		Global.daoTrabajador.eliminar(id);
+		return "{}";
+	}
+	
+	
+	/*private static Gson gson = new Gson();
+	  private static final String URL_ID_VALIDA = "^/\\d+$";
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
@@ -106,6 +137,6 @@ public class TrabajadoresAPI extends HttpServlet {
 		}
 
 		return sb.toString();
-	}
+	}*/
 
 }
