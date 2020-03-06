@@ -56,16 +56,16 @@ public class Cliente {
 
 	public void setNombre(String nombre) {
 		
-		if(nombre == null || nombre.trim().length() == 0) {
+		if(nombre.toLowerCase() == null || nombre.toLowerCase().trim().length() == 0) {
 			throw new ModelosException("El nombre es un campo obligatorio");
+		}
+		
+		if(nombre.toLowerCase().length() <= 2 && nombre.toLowerCase().length() >= 40) {
+			throw new ModelosException("El nombre debe contener entre 2 y 40 caracteres");
 		}
 		
 		if(!nombre.matches(REGEX_NOMBRE_APELLIDOS)) {
 			throw new ModelosException(EXCEPTION_NOMBRE_APELLIDOS);
-		}
-
-		if(nombre.length() < 2 && nombre.length() > 41) {
-			throw new ModelosException("El nombre debe contener entre 2 y 40 caracteres");
 		}
 		
 		this.nombre = nombre;
@@ -78,16 +78,16 @@ public class Cliente {
 	public void setApellidos(String apellidos) {
 		
 
-		if(apellidos == null || apellidos.trim().length() == 0) {
+		if(apellidos.toLowerCase() == null || apellidos.toLowerCase().trim().length() == 0) {
 			throw new ModelosException("Los apellidos son un campo obligatorio");
+		}
+		
+		if(apellidos.toLowerCase().length() <= 2 && apellidos.toLowerCase().length() >= 100) {
+			throw new ModelosException("Los apellidos deben contener entre 2 y 100 caracteres");
 		}
 		
 		if(!apellidos.matches(REGEX_NOMBRE_APELLIDOS)) {
 			throw new ModelosException(EXCEPTION_NOMBRE_APELLIDOS);
-		}
-
-		if(apellidos.length() < 2 && nombre.length() > 101) {
-			throw new ModelosException("Los apellidos deben contener entre 2 y 100 caracteres");
 		}
 		
 		this.apellidos = apellidos;
@@ -98,6 +98,11 @@ public class Cliente {
 	}
 
 	public void setDni(String dni) {
+		
+		if(dni.toLowerCase() == null || dni.toLowerCase().trim().length() == 0) {
+			//setErrorDni(EXCEPTION_OBLIGATORIO);
+			throw new ModelosException("El DNI es un campo obligatorio");
+		}
 		
 		if(!dni.matches(REGEX_DNI)) {
 			throw new ModelosException("No concuerda con el formato de un DNI");
@@ -116,9 +121,6 @@ public class Cliente {
 	}
 
 	public void setTelefono(int telefono) {
-		
-		
-		
 		this.telefono = telefono;
 	}
 

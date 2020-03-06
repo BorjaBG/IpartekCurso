@@ -61,7 +61,9 @@ public class TrabajadoresAPI extends HttpServlet {
 		String json = extraerJSON(request);
 		String path = request.getPathInfo();
 
-		Trabajador trabajador = null;
+		Trabajador trabajador = gson.fromJson(json, Trabajador.class);
+		
+		System.out.println(trabajador.toString());
 		
 		if (path == null || path.equals("/")) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -70,9 +72,8 @@ public class TrabajadoresAPI extends HttpServlet {
 		
 		if (path.matches(URL_ID_VALIDA)) {
 			int id = Integer.parseInt(path.substring(1));
-			
 			trabajador.setId(id);
-			trabajador = gson.fromJson(json, Trabajador.class);
+			//trabajador = gson.fromJson(json, Trabajador.class);
 			Global.daoTrabajador.actualizar(trabajador);
 			response.getWriter().write(gson.toJson(trabajador));
 			response.setStatus(HttpServletResponse.SC_CREATED);

@@ -47,18 +47,18 @@ public class Resena {
 
 	public void setResena(String resena) {
 		
-		if(resena == null || resena.trim().length() == 0) {
-			
-		} else {
-			if(!resena.matches(REGEX_RESENA)) {
-				throw new ModelosException("Solo se admiten carcateres alfanumericos y caracteres especiales (¿?!¡.:,;)");
-			}
-			
-			if(resena.length() < 2 && resena.length() > 401) {
-				throw new ModelosException("La reseña debe contener entre 2 y 400 caracteres");
-			}
-			
+		if(resena.toLowerCase() == null || resena.toLowerCase().trim().length() == 0) {
+			this.resena = null;
+			return;
 		}
+		
+		if (resena.toLowerCase().length() <= 2 && resena.toLowerCase().length() >= 400) {
+			throw new ModelosException("La reseña debe contener entre 2 y 400 caracteres");
+		}
+		
+		if (!resena.matches(REGEX_RESENA)) {
+			throw new ModelosException("Solo se admiten carcateres alfanumericos y caracteres especiales (¿?!¡.:,;)");
+		}	
 		
 		this.resena = resena;
 	}

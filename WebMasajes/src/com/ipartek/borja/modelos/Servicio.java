@@ -39,18 +39,19 @@ public class Servicio {
 
 	public void setNombre(String nombre) {
 		
-		if(nombre == null || nombre.trim().length() == 0) {
+		if(nombre == null || nombre.toLowerCase().trim().length() == 0) {
 			throw new ModelosException("El nombre es un campo obligatorio");
 		}
+		
+		if(nombre.toLowerCase().length() <= 2 || nombre.toLowerCase().length() > 51) {
+			throw new ModelosException("El nombre del servicio debe contener entre 2 y 50 caracteres");
+		}
+		
 		
 		if(!nombre.matches(REGEX_NOMBRE)) {
 			throw new ModelosException("Solo se admiten caracteres de tipo letra y espacios");
 		}
 
-		if(nombre.length() < 2 && nombre.length() > 51) {
-			throw new ModelosException("El nombre del servicio debe contener entre 2 y 50 caracteres");
-		}
-		
 		this.nombre = nombre;
 	}
 
