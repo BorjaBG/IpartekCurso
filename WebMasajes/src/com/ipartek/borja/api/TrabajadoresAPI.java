@@ -21,7 +21,7 @@ public class TrabajadoresAPI extends HttpServlet {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("/{id: \\d+}")
 	public Trabajador getById(@PathParam("id") int id) {
 		return Global.daoTrabajador.obtenerPorId(id);
 	}
@@ -33,15 +33,15 @@ public class TrabajadoresAPI extends HttpServlet {
 	}
 	
 	@PUT
-	@Path("/{id}")
+	@Path("/{id: \\d+}")
 	public Trabajador update(@PathParam("id") int id, Trabajador trabajador) {
 		trabajador.setId(id);
-		Global.daoTrabajador.obtenerPorId(id);
+		Global.daoTrabajador.actualizar(trabajador);
 		return trabajador;
 	}
 	
 	@DELETE
-	@Path("/{id}")
+	@Path("/{id: \\d+}")
 	public String delete(@PathParam("id") int id) {
 		Global.daoTrabajador.eliminar(id);
 		return "{}";

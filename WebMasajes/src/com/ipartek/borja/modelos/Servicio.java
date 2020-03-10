@@ -43,7 +43,7 @@ public class Servicio {
 			throw new ModelosException("El nombre es un campo obligatorio");
 		}
 		
-		if(nombre.toLowerCase().length() <= 2 || nombre.toLowerCase().length() > 51) {
+		if(nombre.toLowerCase().length() < 2 || nombre.toLowerCase().length() > 50) {
 			throw new ModelosException("El nombre del servicio debe contener entre 2 y 50 caracteres");
 		}
 		

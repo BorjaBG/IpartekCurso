@@ -57,13 +57,13 @@ public class Cliente {
 
 	public void setNombre(String nombre) {
 		
-		System.out.println("Estoy en el setter de Cliente" + nombre);
+		//System.out.println("Estoy en el setter de Cliente" + nombre);
 		
 		if(nombre.toLowerCase() == null || nombre.toLowerCase().trim().length() == 0) {
 			throw new ModelosException("El nombre es un campo obligatorio");
 		}
 		
-		if(nombre.toLowerCase().length() <= 2 && nombre.toLowerCase().length() >= 40) {
+		if(nombre.toLowerCase().length() < 2 || nombre.toLowerCase().length() > 40) {
 			throw new ModelosException("El nombre debe contener entre 2 y 40 caracteres");
 		}
 		
@@ -85,7 +85,7 @@ public class Cliente {
 			throw new ModelosException("Los apellidos son un campo obligatorio");
 		}
 		
-		if(apellidos.toLowerCase().length() <= 2 && apellidos.toLowerCase().length() >= 100) {
+		if(apellidos.toLowerCase().length() < 2 || apellidos.toLowerCase().length() > 100) {
 			throw new ModelosException("Los apellidos deben contener entre 2 y 100 caracteres");
 		}
 		

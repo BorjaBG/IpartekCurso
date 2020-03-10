@@ -63,7 +63,8 @@ public class Trabajador {
 			throw new RuntimeException(EXCEPTION_OBLIGATORIO);
 		}
 		
-		if(nombre.toLowerCase().length() <= 2 && nombre.toLowerCase().length() > 41) {
+		if(nombre.toLowerCase().length() < 2 || nombre.toLowerCase().length() > 40) {
+			System.out.println(nombre.toLowerCase().length());
 			//setErrorNombre("El nombre debe contener entre 2 y 40 caracteres");
 			correcto = false;
 			throw new ModelosException("El nombre debe contener entre 2 y 40 caracteres");
@@ -90,7 +91,7 @@ public class Trabajador {
 			throw new ModelosException(EXCEPTION_OBLIGATORIO);
 		}
 		
-		if(apellidos.toLowerCase().length() <= 2 && apellidos.toLowerCase().length() >= 100) {
+		if(apellidos.toLowerCase().length() < 2 || apellidos.toLowerCase().length() > 100) {
 			//setErrorApellidos("Los apellidos deben contener entre 2 y 100 caracteres");
 			correcto = false;
 			throw new ModelosException("Los apellidos deben contener entre 2 y 100 caracteres");
