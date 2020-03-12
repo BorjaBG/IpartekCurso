@@ -17,7 +17,7 @@ import com.ipartek.mf0966_3.borja.modelos.Curso;
 public class CursoMySQL implements Dao<Curso>{
 	
 	private String sqlSelect = "CALL cursogetAll()";
-	private String sqlSelectIdentificador = "CALL clientegetByIdentificador(?)";
+	private String sqlSelectIdentificador = "CALL cursogetByIdentificador(?)";
 	
 	private static DataSource pool;
 	
@@ -86,7 +86,7 @@ public class CursoMySQL implements Dao<Curso>{
 				try (ResultSet rs = cs.executeQuery()) {
 					ArrayList<Curso> cursos = new ArrayList<>();
 					while (rs.next()) {
-						cursos.add(new Curso(rs.getString("identificador"), rs.getString("nombre"), rs.getInt("nHoras")));
+						cursos.add(new Curso(rs.getString("cursoidentificador"), rs.getString("cursonombre"), rs.getInt("cursonhoras")));
 					}
 					return cursos;
 				}
@@ -103,9 +103,8 @@ public class CursoMySQL implements Dao<Curso>{
 			try(CallableStatement cs = con.prepareCall(sqlSelectIdentificador)) {
 				cs.setString(1, identificador);
 				try(ResultSet rs = cs.executeQuery()){
-
 					if(rs.next()) {
-						return new Curso(rs.getString("identificador"), rs.getString("nombre"), rs.getInt("nHoras"));
+						return new Curso(rs.getString("cursoidentificador"), rs.getString("cursonombre"), rs.getInt("cursonhoras"));
 					} else {
 						return null;
 					}
