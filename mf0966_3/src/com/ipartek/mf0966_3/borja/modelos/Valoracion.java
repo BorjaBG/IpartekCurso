@@ -6,8 +6,6 @@ public class Valoracion {
 	String opinion;
 	
 	
-	
-	
 	public Valoracion(int idValoracion, int alumno_codigo, int curso_codigo, String opinion) {
 		setIdValoracion(idValoracion);
 		setAlumno_codigo(alumno_codigo);
