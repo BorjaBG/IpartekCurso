@@ -11,7 +11,7 @@ public class Curso {
 		
 	}
 	
-	public Curso(int nHoras, String nombre, String identificador) {
+	public Curso(String identificador, String nombre, int nHoras) {
 		setnHoras(nHoras);
 		setNombre(nombre);
 		setIdentificador(identificador);
